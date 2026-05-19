@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2026/01/28 16:12:55.000.190,=C:\Users\mihaj\OneDrive\Desktop\projekat\projekat1\Unit1.pas</Transaction>
+    <Transaction>2026/01/28 16:13:04.000.513,C:\Users\mihaj\OneDrive\Desktop\projekat\projekat1\Unit1.fmx=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Unit1.fmx</Transaction>
+    <Transaction>2026/01/28 16:13:04.000.513,C:\Users\mihaj\OneDrive\Desktop\projekat\projekat1\Unit1.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Unit1.pas</Transaction>
+    <Transaction>2026/01/28 16:41:30.000.495,C:\Users\mihaj\OneDrive\Desktop\projekat\projekat1\Project1.dproj=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Project1.dproj</Transaction>
+    <Transaction>2026/01/28 18:09:03.000.074,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Unit2.pas</Transaction>
+    <Transaction>2026/01/29 01:48:59.000.558,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas</Transaction>
+    <Transaction>2026/01/29 01:49:07.000.858,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Baza podataka\Unit3.pas</Transaction>
+    <Transaction>2026/01/29 01:49:07.000.858,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.dfm=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Baza podataka\Unit3.dfm</Transaction>
+    <Transaction>2026/01/29 16:39:39.000.765,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas</Transaction>
+    <Transaction>2026/01/29 18:45:20.000.049,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit5.pas</Transaction>
+    <Transaction>2026/01/29 18:45:41.000.874,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit5.pas</Transaction>
+    <Transaction>2026/01/29 18:45:59.000.924,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas</Transaction>
+    <Transaction>2026/01/29 18:46:57.000.340,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas</Transaction>
+    <Transaction>2026/01/29 18:47:24.000.306,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas</Transaction>
+    <Transaction>2026/01/29 18:47:41.000.403,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas</Transaction>
+    <Transaction>2026/01/29 18:48:25.000.042,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\pocetna.fmx=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit1.fmx</Transaction>
+    <Transaction>2026/01/29 18:48:25.000.042,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\pocetna.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit1.pas</Transaction>
+    <Transaction>2026/01/29 18:48:30.000.112,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\login.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit2.pas</Transaction>
+    <Transaction>2026/01/29 18:48:30.000.112,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\login.fmx=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit2.fmx</Transaction>
+    <Transaction>2026/01/29 18:55:14.000.326,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\menadzer.fmx=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.fmx</Transaction>
+    <Transaction>2026/01/29 18:55:14.000.326,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\menadzer.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas</Transaction>
+    <Transaction>2026/01/29 18:58:03.000.763,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit1.fmx=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\pocetna.fmx</Transaction>
+    <Transaction>2026/01/29 18:58:03.000.763,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit1.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\pocetna.pas</Transaction>
+    <Transaction>2026/01/29 18:58:24.000.132,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.fmx=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\menadzer.fmx</Transaction>
+    <Transaction>2026/01/29 18:58:24.000.132,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\menadzer.pas</Transaction>
+    <Transaction>2026/01/29 18:58:32.000.886,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit2.fmx=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\login.fmx</Transaction>
+    <Transaction>2026/01/29 18:58:32.000.886,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit2.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\login.pas</Transaction>
+    <Transaction>2026/01/29 21:09:15.000.490,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas</Transaction>
+    <Transaction>2026/01/29 21:09:25.000.792,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas</Transaction>
+    <Transaction>2026/01/29 21:09:33.000.271,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.dfm=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Baza podataka\baza.dfm</Transaction>
+    <Transaction>2026/01/29 21:09:33.000.271,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Baza podataka\baza.pas</Transaction>
+    <Transaction>2026/01/29 21:12:38.000.346,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Baza podataka\baza.pas=</Transaction>
+    <Transaction>2026/01/29 21:53:49.000.971,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas=</Transaction>
+    <Transaction>2026/01/29 21:53:58.000.834,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas</Transaction>
+    <Transaction>2026/01/29 21:55:33.000.981,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\menadzer.pas</Transaction>
+    <Transaction>2026/01/29 21:55:33.000.981,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.fmx=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\menadzer.fmx</Transaction>
+    <Transaction>2026/01/29 21:59:07.000.019,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit3.pas</Transaction>
+    <Transaction>2026/01/29 21:59:52.000.419,C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\menadzer.pas=</Transaction>
+    <Transaction>2026/01/29 22:05:44.000.327,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas</Transaction>
+    <Transaction>2026/01/29 22:06:42.000.193,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit4.pas</Transaction>
+    <Transaction>2026/01/30 00:48:01.000.409,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit5.pas</Transaction>
+    <Transaction>2026/01/30 00:49:45.000.267,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit6.pas</Transaction>
+    <Transaction>2026/01/30 00:49:50.000.471,=C:\Users\mihaj\OneDrive\Desktop\mpmdelphi\Program\Unit7.pas</Transaction>
+    <Transaction>2026/02/03 13:40:00.000.924,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Početna.fmx=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit1.fmx</Transaction>
+    <Transaction>2026/02/03 13:40:00.000.924,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Početna.pas=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit1.pas</Transaction>
+    <Transaction>2026/02/03 13:40:19.000.860,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\pocetna.fmx=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Početna.fmx</Transaction>
+    <Transaction>2026/02/03 13:40:19.000.860,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\pocetna.pas=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Početna.pas</Transaction>
+    <Transaction>2026/02/03 13:40:51.000.441,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\UnosPodataka.fmx=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit2.fmx</Transaction>
+    <Transaction>2026/02/03 13:40:51.000.441,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\UnosPodataka.pas=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit2.pas</Transaction>
+    <Transaction>2026/02/03 13:41:23.000.479,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Vozac.fmx=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit7.fmx</Transaction>
+    <Transaction>2026/02/03 13:41:23.000.479,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Vozac.pas=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit7.pas</Transaction>
+    <Transaction>2026/02/03 14:01:58.000.384,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Menadzer.pas=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit3.pas</Transaction>
+    <Transaction>2026/02/03 14:01:58.000.384,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Menadzer.fmx=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit3.fmx</Transaction>
+    <Transaction>2026/02/03 14:02:18.000.416,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Admin.fmx=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit4.fmx</Transaction>
+    <Transaction>2026/02/03 14:02:18.000.416,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Admin.pas=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit4.pas</Transaction>
+    <Transaction>2026/02/04 23:23:47.000.178,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Klijent.fmx=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit6.fmx</Transaction>
+    <Transaction>2026/02/04 23:23:47.000.178,C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Klijent.pas=C:\Users\Administrator\Documents\Projektni-zahtev-Sistem-za-izradu-softvera-za-transportnu-kompaniju-MPMTransport\mpmdelphi\Program\Unit6.pas</Transaction>
+    <Transaction>2026/05/14 16:36:20.000.631,C:\Users\Dell user\Documents\GitHub\PoznavanjePoslovnihProcesa\mpmtransportdelphi\Program\Unit5.fmx=C:\Users\Dell user\Documents\GitHub\PoznavanjePoslovnihProcesa\mpmtransportdelphi\Program\Dispecer.fmx</Transaction>
+    <Transaction>2026/05/14 16:36:20.000.631,C:\Users\Dell user\Documents\GitHub\PoznavanjePoslovnihProcesa\mpmtransportdelphi\Program\Unit5.pas=C:\Users\Dell user\Documents\GitHub\PoznavanjePoslovnihProcesa\mpmtransportdelphi\Program\Dispecer.pas</Transaction>
+    <Transaction>2026/05/14 16:44:17.000.717,=C:\Users\Dell user\Documents\GitHub\PoznavanjePoslovnihProcesa\mpmtransportdelphi\Program\Unit1.pas</Transaction>
+    <Transaction>2026/05/14 16:45:27.000.026,=C:\Users\Dell user\Documents\GitHub\PoznavanjePoslovnihProcesa\mpmtransportdelphi\Program\Unit1.pas</Transaction>
+    <Transaction>2026/05/14 16:46:03.000.474,=C:\Users\Dell user\Documents\GitHub\PoznavanjePoslovnihProcesa\mpmtransportdelphi\Program\Unit8.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="pocetna.pas"/>
+    <File Path="pocetna.fmx"/>
+    <File Path="UnosPodataka.pas"/>
+    <File Path="UnosPodataka.fmx"/>
+    <File Path="Menadzer.pas"/>
+    <File Path="Menadzer.fmx"/>
+    <File Path="Admin.pas"/>
+    <File Path="Admin.fmx"/>
+    <File Path="Dispecer.pas"/>
+    <File Path="Dispecer.fmx"/>
+    <File Path="Klijent.pas"/>
+    <File Path="Klijent.fmx"/>
+    <File Path="Vozac.pas"/>
+    <File Path="Vozac.fmx"/>
+  </ProjectSortOrder>
+</BorlandProject>

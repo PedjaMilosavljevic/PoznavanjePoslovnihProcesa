@@ -1,0 +1,48 @@
+unit Vozac;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.Controls.Presentation, FMX.StdCtrls,UnosPodataka, FMX.Objects, FMX.Maps, Data.DB, Data.Win.ADODB, Menadzer;
+
+type
+  TForm7 = class(TForm)
+    SpeedButton1: TSpeedButton;
+    MapView1: TMapView;
+    Text1: TText;
+    btnIsporuke: TButton;
+    btnProfil: TButton;
+    btnChat: TButton;
+    ADOConnection1: TADOConnection;
+    ADOQuery1: TADOQuery;
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+  private
+  public
+  end;
+
+var
+  Form7: TForm7;
+
+implementation
+ {$R *.fmx}
+
+
+procedure TForm7.FormCreate(Sender: TObject);
+begin
+ADOConnection1.ConnectionString :=
+  'Provider=Microsoft.Jet.OLEDB.4.0;' +
+  'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
+ADOConnection1.LoginPrompt := False;
+ADOConnection1.Connected := True;
+end;
+
+procedure TForm7.SpeedButton1Click(Sender: TObject);
+begin
+Form2.Show;
+Close;
+end;
+
+end.

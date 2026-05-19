@@ -1,0 +1,34 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 536
+  ClientWidth = 324
+  Fill.Color = claLightgray
+  Fill.Kind = Solid
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object SpeedButton1: TSpeedButton
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'arrowlefttoolbutton'
+    Text = 'SpeedButton1'
+    TextSettings.Trimming = None
+    OnClick = SpeedButton1Click
+  end
+  object CornerButton1: TCornerButton
+    Position.X = 200.000000000000000000
+    Position.Y = 216.000000000000000000
+    Sides = [Top, Left, Bottom, Right]
+    TabOrder = 1
+    Text = 'CornerButton1'
+    TextSettings.Trimming = None
+    XRadius = 3.000000000000000000
+    YRadius = 3.000000000000000000
+  end
+end

@@ -1,0 +1,24 @@
+object Form4: TForm4
+  Left = 0
+  Top = 0
+  Caption = 'Form4'
+  ClientHeight = 536
+  ClientWidth = 324
+  Fill.Color = claLightgray
+  Fill.Kind = Solid
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object SpeedButton1: TSpeedButton
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'arrowlefttoolbutton'
+    Text = 'SpeedButton1'
+    TextSettings.Trimming = None
+    OnClick = SpeedButton1Click
+  end
+end
