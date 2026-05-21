@@ -9,7 +9,10 @@ uses
   Admin in 'Admin.pas' {Form4},
   Unit5 in 'Unit5.pas' {Form5},
   Klijent in 'Klijent.pas' {Form6},
-  Vozac in 'Vozac.pas' {Form7};
+  Vozac in 'Vozac.pas' {Form7},
+  NaloziIzdavanje in 'NaloziIzdavanje.pas' {FormNaloziIzdavanje},
+  Narudzbenice in 'Narudzbenice.pas' {FormNarudzbenice},
+  PregledZaliha in 'PregledZaliha.pas' {FormPregledZaliha};
 
 {$R *.res}
 
@@ -22,5 +25,8 @@ begin
   Application.CreateForm(TForm5, Form5);
   Application.CreateForm(TForm6, Form6);
   Application.CreateForm(TForm7, Form7);
+  Application.CreateForm(TFormNaloziIzdavanje, FormNaloziIzdavanje);
+  Application.CreateForm(TFormNarudzbenice, FormNarudzbenice);
+  Application.CreateForm(TFormPregledZaliha, FormPregledZaliha);
   Application.Run;
 end.

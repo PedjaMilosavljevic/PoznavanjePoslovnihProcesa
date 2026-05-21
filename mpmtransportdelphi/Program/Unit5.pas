@@ -20,6 +20,7 @@ type
     txtVozilaUVoznji: TText;
     txtVozilaNaUtovaru: TText;
     txtVozilaSaProblemima: TText;
+    ImageControl1: TImageControl;
     procedure SpeedButton1Click(Sender: TObject);
   private
     { Private declarations }

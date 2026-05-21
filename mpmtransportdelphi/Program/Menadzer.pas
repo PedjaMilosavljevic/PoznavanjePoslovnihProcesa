@@ -29,6 +29,7 @@ type
     ADOConnection1: TADOConnection;
     ComboKorisnici: TComboBox;
     DugmeIzaberiKorisnika: TButton;
+    ImageControl1: TImageControl;
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure DugmeIzaberiKorisnikaClick(Sender: TObject);

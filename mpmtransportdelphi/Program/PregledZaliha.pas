@@ -53,7 +53,7 @@ implementation
 
 {$R *.fmx}
 
-uses NovaNabavka, IzdavanjeRobe;
+
 
 procedure TFormPregledZaliha.PoveziBazu;
 begin
@@ -234,17 +234,29 @@ begin
 end;
 
 procedure TFormPregledZaliha.btnNovaNabavkaClick(Sender: TObject);
+var
+  F: TForm;
 begin
-  FormNovaNabavka.ShowModal;
-  UcitajZalihe(txtPretraga.Text,
-    ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  F := TForm(Application.FindComponent('FormNovaNabavka'));
+  if Assigned(F) then
+  begin
+    F.ShowModal;
+    UcitajZalihe(txtPretraga.Text,
+      ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  end;
 end;
 
 procedure TFormPregledZaliha.btnIzdajRobuClick(Sender: TObject);
+var
+  F: TForm;
 begin
-  FormIzdavanjeRobe.ShowModal;
-  UcitajZalihe(txtPretraga.Text,
-    ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  F := TForm(Application.FindComponent('FormIzdavanjeRobe'));
+  if Assigned(F) then
+  begin
+    F.ShowModal;
+    UcitajZalihe(txtPretraga.Text,
+      ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  end;
 end;
 
 procedure TFormPregledZaliha.txtPretragaChange(Sender: TObject);

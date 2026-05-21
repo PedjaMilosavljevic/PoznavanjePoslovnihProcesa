@@ -45,7 +45,7 @@ implementation
 
 {$R *.fmx}
 
-uses NovaNabavka;
+
 
 procedure TFormNarudzbenice.PoveziBazu;
 begin
@@ -202,9 +202,17 @@ begin
 end;
 
 procedure TFormNarudzbenice.btnNoviNalogClick(Sender: TObject);
+var
+  F: TForm;
 begin
-  FormNovaNabavka.ShowModal;
-  UcitajNabavke;
+  F := TForm(Application.FindComponent('FormNovaNabavka'));
+  if Assigned(F) then
+  begin
+    F.ShowModal;
+    UcitajNabavke;
+  end
+  else
+    ShowMessage('Forma za nabavku nije ucitana u projekat.');
 end;
 
 end.

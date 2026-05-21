@@ -45,7 +45,7 @@ implementation
 
 {$R *.fmx}
 
-uses IzdavanjeRobe;
+// Nema uses IzdavanjeRobe ovde - koristimo ShowModal kroz Screen.FindForm
 
 procedure TFormNaloziIzdavanje.PoveziBazu;
 begin
@@ -202,9 +202,18 @@ begin
 end;
 
 procedure TFormNaloziIzdavanje.btnNoviNalogClick(Sender: TObject);
+var
+  F: TForm;
 begin
-  FormIzdavanjeRobe.ShowModal;
-  UcitajIzdavanja;
+  // Otvaramo IzdavanjeRobe formu dinamicki da izbegnemo circular uses
+  F := TForm(Application.FindComponent('FormIzdavanjeRobe'));
+  if Assigned(F) then
+  begin
+    F.ShowModal;
+    UcitajIzdavanja;
+  end
+  else
+    ShowMessage('Forma za izdavanje nije ucitana u projekat.');
 end;
 
 end.
