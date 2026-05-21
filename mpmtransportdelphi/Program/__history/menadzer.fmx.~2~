@@ -1,0 +1,97 @@
+object Form4: TForm4
+  Left = 0
+  Top = 0
+  Caption = 'Form4'
+  ClientHeight = 536
+  ClientWidth = 324
+  Fill.Color = claLightgray
+  Fill.Kind = Solid
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object MapView1: TMapView
+    Position.X = 72.000000000000000000
+    Position.Y = 24.000000000000000000
+    Size.Width = 177.000000000000000000
+    Size.Height = 129.000000000000000000
+    Size.PlatformDefault = False
+    object Image1: TImage
+      MultiResBitmap = <
+        item
+        end>
+      Position.Y = -16.000000000000000000
+      Size.Width = 177.000000000000000000
+      Size.Height = 129.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object PrijavaBtn: TButton
+    StyledSettings = [Family]
+    Position.X = 40.000000000000000000
+    Position.Y = 186.000000000000000000
+    Size.Width = 89.000000000000000000
+    Size.Height = 79.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'PrijavaBtnStyle1'
+    TabOrder = 1
+    Text = 'Isporuke'
+    TextSettings.Font.Size = 15.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000200000004000000}
+    TextSettings.Trimming = None
+    object Button1: TButton
+      StyledSettings = [Family]
+      Position.X = 152.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 79.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = 'PrijavaBtnStyle1'
+      TabOrder = 0
+      Text = 'Fakture'
+      TextSettings.Font.Size = 15.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000200000004000000}
+      TextSettings.Trimming = None
+      object Button2: TButton
+        StyledSettings = [Family]
+        Position.X = -152.000000000000000000
+        Position.Y = 104.000000000000000000
+        Size.Width = 89.000000000000000000
+        Size.Height = 79.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'PrijavaBtnStyle1'
+        TabOrder = 0
+        Text = 'Analize'
+        TextSettings.Font.Size = 15.000000000000000000
+        TextSettings.Font.StyleExt = {00070000000200000004000000}
+        TextSettings.Trimming = None
+        object Button3: TButton
+          StyledSettings = [Family]
+          Position.X = 152.000000000000000000
+          Size.Width = 89.000000000000000000
+          Size.Height = 79.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'PrijavaBtnStyle1'
+          TabOrder = 0
+          Text = 'Finansije'
+          TextSettings.Font.Size = 15.000000000000000000
+          TextSettings.Font.StyleExt = {00070000000200000004000000}
+          TextSettings.Trimming = None
+        end
+      end
+    end
+  end
+  object Button4: TButton
+    StyledSettings = [Family]
+    Position.X = 72.000000000000000000
+    Position.Y = 402.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 47.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'PrijavaBtnStyle1'
+    TabOrder = 0
+    Text = 'Chat'
+    TextSettings.Font.Size = 15.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000200000004000000}
+    TextSettings.Trimming = None
+  end
+end

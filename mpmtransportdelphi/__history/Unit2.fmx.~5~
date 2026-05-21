@@ -1,0 +1,78 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 536
+  ClientWidth = 324
+  Fill.Color = claLightgray
+  Fill.Kind = Solid
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object SpeedButton1: TSpeedButton
+    Position.X = 8.000000000000000000
+    Position.Y = 8.000000000000000000
+    Size.Width = 33.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    StyleLookup = 'arrowlefttoolbutton'
+    Text = 'SpeedButton1'
+    TextSettings.Trimming = None
+    OnClick = SpeedButton1Click
+  end
+  object Text1: TText
+    Position.X = 8.000000000000000000
+    Position.Y = 80.000000000000000000
+    Size.Width = 185.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Unesite podatke'
+    TextSettings.Font.Size = 17.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.FontColor = claDarkblue
+    TextSettings.HorzAlign = Leading
+  end
+  object txtbKorisnickoime: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 4
+    TextSettings.Font.Size = 15.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.FontColor = claDarkgray
+    Position.X = 8.000000000000000000
+    Position.Y = 152.000000000000000000
+    Size.Width = 153.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TextPrompt = 'Korisni'#269'ko ime'
+    StyledSettings = [Family]
+  end
+  object txtbSifra: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    TabOrder = 3
+    TextSettings.Font.Size = 15.000000000000000000
+    TextSettings.Font.StyleExt = {00070000000000000004000000}
+    TextSettings.FontColor = claDarkgray
+    Position.X = 8.000000000000000000
+    Position.Y = 216.000000000000000000
+    Size.Width = 153.000000000000000000
+    Size.Height = 33.000000000000000000
+    Size.PlatformDefault = False
+    TextPrompt = 'Korisni'#269'ko ime'
+    StyledSettings = [Family]
+  end
+  object ComboBox1: TComboBox
+    Items.Strings = (
+      'Menad'#382'ment'
+      'Administrator'
+      'Dispe'#269'er'
+      'Klijent'
+      'Voza'#269)
+    Position.X = 8.000000000000000000
+    Position.Y = 312.000000000000000000
+    Size.Width = 137.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+  end
+end

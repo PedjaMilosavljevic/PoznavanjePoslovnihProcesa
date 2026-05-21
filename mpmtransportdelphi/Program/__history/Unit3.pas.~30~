@@ -1,0 +1,38 @@
+unit Unit3;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Maps;
+
+type
+  TForm3 = class(TForm)
+    MapView1: TMapView;
+    Image1: TImage;
+    PrijavaBtn: TButton;
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    procedure Image1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+{$R *.fmx}
+
+procedure TForm3.Image1Click(Sender: TObject);
+begin
+               Image1.Bitmap.LoadFromFile('C:\Putanja\do\slike\moja_slika.jpg');
+end;
+
+end.

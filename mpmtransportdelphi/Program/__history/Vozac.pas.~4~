@@ -1,0 +1,38 @@
+unit Vozac;
+
+interface
+
+uses
+  System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.Controls.Presentation, FMX.StdCtrls,UnosPodataka, FMX.Objects, FMX.Maps;
+
+type
+  TForm7 = class(TForm)
+    SpeedButton1: TSpeedButton;
+    MapView1: TMapView;
+    Text1: TText;
+    btnIsporuke: TButton;
+    btnProfil: TButton;
+    btnChat: TButton;
+    procedure SpeedButton1Click(Sender: TObject);
+  private
+     FPrijavljeniUserID: Integer;
+  public
+   property PrijavljeniUserID: Integer read FPrijavljeniUserID write FPrijavljeniUserID;
+  end;
+
+var
+  Form7: TForm7;
+
+implementation
+
+{$R *.fmx}
+
+procedure TForm7.SpeedButton1Click(Sender: TObject);
+begin
+Form2.Show;
+Close;
+end;
+
+end.

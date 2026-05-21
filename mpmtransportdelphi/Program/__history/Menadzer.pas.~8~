@@ -1,0 +1,66 @@
+unit Menadzer;
+
+interface
+
+uses
+    System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
+  FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
+  FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Maps,
+  UnosPodataka, Data.DB, Data.Win.ADODB, FMX.Edit;
+  type
+  TPrijavljeniKorisnik = record
+    ID: Integer;
+    KorisnickoIme: string;
+    Role: string;
+  end;
+  var
+  TrenutniKorisnik: TPrijavljeniKorisnik;
+type
+  TForm3 = class(TForm)
+    MapView1: TMapView;
+    PrijavaBtn: TButton;
+    DugmeFakture: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    btnChat: TButton;
+    btnOtvoriProfil: TButton;
+    Text1: TText;
+    SpeedButton1: TSpeedButton;
+    ADOQuery1: TADOQuery;
+    ADOConnection1: TADOConnection;
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+
+  private
+
+  public
+
+    { Public declarations }
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+
+{$R *.fmx}
+
+
+procedure TForm3.FormCreate(Sender: TObject);
+begin
+ADOConnection1.ConnectionString :=
+    'Provider=Microsoft.Jet.OLEDB.4.0;' +
+    'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
+  ADOConnection1.LoginPrompt := False;
+  ADOConnection1.Connected := True;
+end;
+
+procedure TForm3.SpeedButton1Click(Sender: TObject);
+begin
+Form2.Show;
+Close;
+end;
+
+
+end.
