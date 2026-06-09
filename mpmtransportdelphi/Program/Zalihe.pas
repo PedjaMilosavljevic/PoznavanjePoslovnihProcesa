@@ -5,51 +5,50 @@ interface
 uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
-  FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Edit,
-  FMX.ListBox, FMX.Layouts, FMX.Grid, FMX.Grid.Style, FMX.ScrollBox,
-  Data.DB, Data.Win.ADODB, UnosPodataka;
+  FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Layouts,
+  FMX.ScrollBox, Data.DB, Data.Win.ADODB, UnosPodataka;
 
 type
   TFormZalihe = class(TForm)
+    RectHeader: TRectangle;
     SpeedButton1: TSpeedButton;
-    Text1: TText;
-    // Toolbar
+    lblTitle: TLabel;
+    ScrollBox1: TScrollBox;
+    RectMetrike: TRectangle;
+    RectUkupno: TRectangle;
+    lblUkupnoCaption: TLabel;
+    lblUkupno: TLabel;
+    lblUkupnoSub: TLabel;
+    RectKriticno: TRectangle;
+    lblKriticnoCaption: TLabel;
+    lblKriticno: TLabel;
+    lblKriticnoSub: TLabel;
+    RectNabavke: TRectangle;
+    lblNabavkeCaption: TLabel;
+    lblNabavke: TLabel;
+    lblNabavkeSub: TLabel;
+    RectIzdavanja: TRectangle;
+    lblIzdavanjaCaption: TLabel;
+    lblIzdavanja: TLabel;
+    lblIzdavanjaSub: TLabel;
+    RectBrzaPristup: TRectangle;
+    lblBrzPristupTitle: TLabel;
+    btnArtikli: TButton;
+    btnNabavke: TButton;
+    btnIzdavanja: TButton;
     btnNovaNabavka: TButton;
-    btnIzdajRobu: TButton;
-    btnOsvezi: TButton;
-    // Filter
-    txtPretraga: TEdit;
-    ComboKategorija: TComboBox;
-    lblPretraga: TLabel;
-    lblKategorija: TLabel;
-    // Grid
-    GridZalihe: TStringGrid;
-    ColNaziv: TStringColumn;
-    ColKategorija: TStringColumn;
-    ColKolicina: TStringColumn;
-    ColMinKolicina: TStringColumn;
-    ColLokacija: TStringColumn;
-    ColStatus: TStringColumn;
-    // Alert panel
-    PanelAlert: TPanel;
-    lblAlert: TLabel;
-    // DB
+    RectNavBar: TRectangle;
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure btnArtikliClick(Sender: TObject);
+    procedure btnNabavkeClick(Sender: TObject);
+    procedure btnIzdavanjaClick(Sender: TObject);
     procedure btnNovaNabavkaClick(Sender: TObject);
-    procedure btnIzdajRobuClick(Sender: TObject);
-    procedure btnOsveziClick(Sender: TObject);
-    procedure txtPretragaChange(Sender: TObject);
-    procedure ComboKategorijaChange(Sender: TObject);
   private
     procedure PoveziBazu;
-    procedure UcitajZalihe(Filter: string = ''; Kategorija: string = '');
-    procedure ProveriKriticneZalihe;
-    function StatusZalihe(Kolicina, MinKolicina: Integer): string;
-  public
-    { Public declarations }
+    procedure UcitajMetrike;
   end;
 
 var
@@ -58,8 +57,6 @@ var
 implementation
 
 {$R *.fmx}
-
-uses NovaNabavka, IzdavanjeRobe;
 
 procedure TFormZalihe.PoveziBazu;
 begin
@@ -73,97 +70,47 @@ end;
 procedure TFormZalihe.FormCreate(Sender: TObject);
 begin
   PoveziBazu;
-  // Postavljanje kolona grida
-  ColNaziv.Header     := 'Naziv artikla';
-  ColKategorija.Header := 'Kategorija';
-  ColKolicina.Header  := 'Kolicina';
-  ColMinKolicina.Header := 'Min. kolicina';
-  ColLokacija.Header  := 'Lokacija';
-  ColStatus.Header    := 'Status';
-  // Popuni kategorije
-  ComboKategorija.Items.Clear;
-  ComboKategorija.Items.Add('Sve kategorije');
-  ComboKategorija.Items.Add('Rezervni delovi');
-  ComboKategorija.Items.Add('Maziva i goriva');
-  ComboKategorija.Items.Add('Gume i felne');
-  ComboKategorija.Items.Add('Alati i oprema');
-  ComboKategorija.ItemIndex := 0;
-  UcitajZalihe;
-  ProveriKriticneZalihe;
+  UcitajMetrike;
 end;
 
-function TFormZalihe.StatusZalihe(Kolicina, MinKolicina: Integer): string;
+procedure TFormZalihe.UcitajMetrike;
 begin
-  if Kolicina = 0 then
-    Result := 'NEMA NA STANJU'
-  else if Kolicina < MinKolicina then
-    Result := 'KRITICNO'
-  else if Kolicina < MinKolicina * 1.5 then
-    Result := 'NISKA ZALIHA'
-  else
-    Result := 'OK';
-end;
+  try
+    // Ukupno artikala
+    ADOQuery1.Close;
+    ADOQuery1.SQL.Text := 'SELECT COUNT(*) AS br FROM zalihe';
+    ADOQuery1.Open;
+    lblUkupno.Text := ADOQuery1.FieldByName('br').AsString;
 
-procedure TFormZalihe.UcitajZalihe(Filter: string; Kategorija: string);
-var
-  SQL: string;
-  Row: Integer;
-  Kolicina, MinKolicina: Integer;
-begin
-  SQL := 'SELECT id_artikla, naziv, kategorija, kolicina_na_stanju, ' +
-         'min_kolicina, lokacija_u_magacinu FROM zalihe WHERE 1=1';
+    // Kriticne zalihe
+    ADOQuery1.Close;
+    ADOQuery1.SQL.Text :=
+      'SELECT COUNT(*) AS br FROM zalihe ' +
+      'WHERE kolicina_na_stanju < min_kolicina';
+    ADOQuery1.Open;
+    lblKriticno.Text := ADOQuery1.FieldByName('br').AsString;
 
-  if Trim(Filter) <> '' then
-    SQL := SQL + ' AND naziv LIKE ''%' + Trim(Filter) + '%''';
+    // Narudzbenice u toku
+    ADOQuery1.Close;
+    ADOQuery1.SQL.Text :=
+      'SELECT COUNT(*) AS br FROM nalog_nabavka ' +
+      'WHERE status = ''U obradi''';
+    ADOQuery1.Open;
+    lblNabavke.Text := ADOQuery1.FieldByName('br').AsString;
 
-  if (Kategorija <> '') and (Kategorija <> 'Sve kategorije') then
-    SQL := SQL + ' AND kategorija = ''' + Kategorija + '''';
+    // Izdavanja danas
+    ADOQuery1.Close;
+    ADOQuery1.SQL.Text :=
+      'SELECT COUNT(*) AS br FROM nalog_izdavanje ' +
+      'WHERE datum_izdavanja >= #' +
+        FormatDateTime('mm/dd/yyyy', Date) + '#';
+    ADOQuery1.Open;
+    lblIzdavanja.Text := ADOQuery1.FieldByName('br').AsString;
 
-  SQL := SQL + ' ORDER BY naziv';
-
-  ADOQuery1.Close;
-  ADOQuery1.SQL.Text := SQL;
-  ADOQuery1.Open;
-
-  GridZalihe.RowCount := ADOQuery1.RecordCount;
-  Row := 0;
-
-  while not ADOQuery1.Eof do
-  begin
-    Kolicina    := ADOQuery1.FieldByName('kolicina_na_stanju').AsInteger;
-    MinKolicina := ADOQuery1.FieldByName('min_kolicina').AsInteger;
-
-    GridZalihe.Cells[0, Row] := ADOQuery1.FieldByName('naziv').AsString;
-    GridZalihe.Cells[1, Row] := ADOQuery1.FieldByName('kategorija').AsString;
-    GridZalihe.Cells[2, Row] := IntToStr(Kolicina);
-    GridZalihe.Cells[3, Row] := IntToStr(MinKolicina);
-    GridZalihe.Cells[4, Row] := ADOQuery1.FieldByName('lokacija_u_magacinu').AsString;
-    GridZalihe.Cells[5, Row] := StatusZalihe(Kolicina, MinKolicina);
-
-    Inc(Row);
-    ADOQuery1.Next;
+  except
+    on E: Exception do
+      ShowMessage('Greska pri citanju podataka: ' + E.Message);
   end;
-end;
-
-procedure TFormZalihe.ProveriKriticneZalihe;
-var
-  BrojKriticnih: Integer;
-begin
-  ADOQuery1.Close;
-  ADOQuery1.SQL.Text :=
-    'SELECT COUNT(*) AS br FROM zalihe ' +
-    'WHERE kolicina_na_stanju < min_kolicina';
-  ADOQuery1.Open;
-  BrojKriticnih := ADOQuery1.FieldByName('br').AsInteger;
-
-  if BrojKriticnih > 0 then
-  begin
-    PanelAlert.Visible := True;
-    lblAlert.Text := 'UPOZORENJE: ' + IntToStr(BrojKriticnih) +
-                     ' artikala ispod minimalne zalihe! Potrebna nabavka.';
-  end
-  else
-    PanelAlert.Visible := False;
 end;
 
 procedure TFormZalihe.SpeedButton1Click(Sender: TObject);
@@ -172,37 +119,37 @@ begin
   Close;
 end;
 
+procedure TFormZalihe.btnArtikliClick(Sender: TObject);
+var
+  F: TForm;
+begin
+  F := TForm(Application.FindComponent('FormPregledZaliha'));
+  if Assigned(F) then F.Show;
+end;
+
+procedure TFormZalihe.btnNabavkeClick(Sender: TObject);
+var
+  F: TForm;
+begin
+  F := TForm(Application.FindComponent('FormNarudzbenice'));
+  if Assigned(F) then F.Show;
+end;
+
+procedure TFormZalihe.btnIzdavanjaClick(Sender: TObject);
+var
+  F: TForm;
+begin
+  F := TForm(Application.FindComponent('FormNaloziIzdavanje'));
+  if Assigned(F) then F.Show;
+end;
+
 procedure TFormZalihe.btnNovaNabavkaClick(Sender: TObject);
+var
+  F: TForm;
 begin
-  FormNovaNabavka.ShowModal;
-  UcitajZalihe;
-  ProveriKriticneZalihe;
-end;
-
-procedure TFormZalihe.btnIzdajRobuClick(Sender: TObject);
-begin
-  FormIzdavanjeRobe.ShowModal;
-  UcitajZalihe;
-  ProveriKriticneZalihe;
-end;
-
-procedure TFormZalihe.btnOsveziClick(Sender: TObject);
-begin
-  UcitajZalihe(txtPretraga.Text,
-    ComboKategorija.Items[ComboKategorija.ItemIndex]);
-  ProveriKriticneZalihe;
-end;
-
-procedure TFormZalihe.txtPretragaChange(Sender: TObject);
-begin
-  UcitajZalihe(txtPretraga.Text,
-    ComboKategorija.Items[ComboKategorija.ItemIndex]);
-end;
-
-procedure TFormZalihe.ComboKategorijaChange(Sender: TObject);
-begin
-  UcitajZalihe(txtPretraga.Text,
-    ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  F := TForm(Application.FindComponent('FormNovaNabavka'));
+  if Assigned(F) then F.ShowModal;
+  UcitajMetrike;
 end;
 
 end.

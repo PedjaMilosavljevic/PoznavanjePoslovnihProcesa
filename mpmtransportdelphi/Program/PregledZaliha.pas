@@ -11,9 +11,11 @@ uses
 
 type
   TFormPregledZaliha = class(TForm)
+    RectHeader: TRectangle;
     SpeedButton1: TSpeedButton;
     lblTitle: TLabel;
     Line1: TLine;
+    RectFilter: TRectangle;
     txtPretraga: TEdit;
     ComboKategorija: TComboBox;
     RectTableHeader: TRectangle;
@@ -42,7 +44,6 @@ type
     function StatusBoja(Status: string): TAlphaColor;
     function StatusZalihe(Kol, Min: Integer): string;
     procedure DodajRed(Naziv, Kat, Kolicina, Min, Lok, Status: string);
-  public
   end;
 
 var
@@ -52,7 +53,7 @@ implementation
 
 {$R *.fmx}
 
-uses NovaNabavka, IzdavanjeRobe;
+
 
 procedure TFormPregledZaliha.PoveziBazu;
 begin
@@ -60,7 +61,7 @@ begin
     'Provider=Microsoft.Jet.OLEDB.4.0;' +
     'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
   ADOConnection1.LoginPrompt := False;
-  ADOConnection1.Connected := True;
+  ADOConnection1.Connected   := True;
 end;
 
 procedure TFormPregledZaliha.FormCreate(Sender: TObject);
@@ -77,134 +78,129 @@ end;
 
 function TFormPregledZaliha.StatusZalihe(Kol, Min: Integer): string;
 begin
-  if Kol = 0 then Result := 'Nema'
-  else if Kol < Min then Result := 'Kriticno'
+  if Kol = 0 then         Result := 'Nema'
+  else if Kol < Min then  Result := 'Kriticno'
   else if Kol < Min * 2 then Result := 'Niska zaliha'
-  else Result := 'OK';
+  else                    Result := 'OK';
 end;
 
 function TFormPregledZaliha.StatusBoja(Status: string): TAlphaColor;
 begin
-  if Status = 'OK' then Result := $FF1D9E75
+  if      Status = 'OK'          then Result := $FF1D9E75
   else if Status = 'Niska zaliha' then Result := $FFEF9F27
-  else Result := $FFE05050;
+  else                                 Result := $FFE05050;
 end;
 
 procedure TFormPregledZaliha.DodajRed(Naziv, Kat, Kolicina, Min, Lok, Status: string);
 var
   Item: TListBoxItem;
-  rectRow, rectStatus: TRectangle;
-  lblN, lblK, lblKol, lblM, lblL, lblS: TLabel;
+  Layout: TLayout;
+  lblN, lblK, lblKol, lblM, lblL: TLabel;
+  rectStatus: TRectangle;
+  lblS: TLabel;
   lineSep: TLine;
 begin
   Item := TListBoxItem.Create(ListBoxZalihe);
   Item.Height := 52;
-  Item.Selectable := True;
-  Item.StyleLookup := 'listboxitemstyle';
+  Item.Parent := ListBoxZalihe;
 
-  rectRow := TRectangle.Create(Item);
-  rectRow.Parent := Item;
-  rectRow.Align := TAlignLayout.Client;
-  rectRow.Fill.Color := TAlphaColors.White;
-  rectRow.Stroke.Kind := TBrushKind.None;
+  Layout := TLayout.Create(Item);
+  Layout.Parent  := Item;
+  Layout.Align   := TAlignLayout.Client;
 
   // Naziv
-  lblN := TLabel.Create(rectRow);
-  lblN.Parent := rectRow;
+  lblN := TLabel.Create(Layout);
+  lblN.Parent := Layout;
   lblN.Position.X := 10;
   lblN.Position.Y := 8;
-  lblN.Width := 100;
+  lblN.Width  := 100;
   lblN.Height := 36;
   lblN.Text := Naziv;
   lblN.WordWrap := True;
-  lblN.TextSettings.Font.Size := 10;
-  lblN.TextSettings.FontColor := $FF222222;
+  lblN.TextSettings.Font.Size  := 10;
+  lblN.TextSettings.FontColor  := $FF222222;
 
   // Kategorija
-  lblK := TLabel.Create(rectRow);
-  lblK.Parent := rectRow;
+  lblK := TLabel.Create(Layout);
+  lblK.Parent := Layout;
   lblK.Position.X := 118;
   lblK.Position.Y := 18;
-  lblK.Width := 68;
+  lblK.Width  := 68;
   lblK.Height := 16;
   lblK.Text := Kat;
   lblK.TextSettings.Font.Size := 10;
   lblK.TextSettings.FontColor := $FF555555;
 
   // Kolicina
-  lblKol := TLabel.Create(rectRow);
-  lblKol.Parent := rectRow;
+  lblKol := TLabel.Create(Layout);
+  lblKol.Parent := Layout;
   lblKol.Position.X := 192;
   lblKol.Position.Y := 18;
-  lblKol.Width := 48;
+  lblKol.Width  := 48;
   lblKol.Height := 16;
   lblKol.Text := Kolicina;
   lblKol.TextSettings.Font.Size := 10;
   lblKol.TextSettings.FontColor := $FF222222;
 
   // Min
-  lblM := TLabel.Create(rectRow);
-  lblM.Parent := rectRow;
+  lblM := TLabel.Create(Layout);
+  lblM.Parent := Layout;
   lblM.Position.X := 246;
   lblM.Position.Y := 18;
-  lblM.Width := 24;
+  lblM.Width  := 24;
   lblM.Height := 16;
   lblM.Text := Min;
   lblM.TextSettings.Font.Size := 10;
   lblM.TextSettings.FontColor := $FF888888;
 
   // Lokacija
-  lblL := TLabel.Create(rectRow);
-  lblL.Parent := rectRow;
+  lblL := TLabel.Create(Layout);
+  lblL.Parent := Layout;
   lblL.Position.X := 276;
   lblL.Position.Y := 18;
-  lblL.Width := 52;
+  lblL.Width  := 52;
   lblL.Height := 16;
   lblL.Text := Lok;
   lblL.TextSettings.Font.Size := 10;
   lblL.TextSettings.FontColor := $FF555555;
 
   // Status badge
-  rectStatus := TRectangle.Create(rectRow);
-  rectStatus.Parent := rectRow;
+  rectStatus := TRectangle.Create(Layout);
+  rectStatus.Parent   := Layout;
   rectStatus.Position.X := 330;
   rectStatus.Position.Y := 14;
-  rectStatus.Width := 50;
+  rectStatus.Width  := 50;
   rectStatus.Height := 22;
-  rectStatus.XRadius := 11;
-  rectStatus.YRadius := 11;
-  rectStatus.Fill.Color := StatusBoja(Status) and $33FFFFFF or (StatusBoja(Status) and $FF000000 shr 1);
-  rectStatus.Stroke.Kind := TBrushKind.None;
+  rectStatus.XRadius := 6;
+  rectStatus.YRadius := 6;
+  rectStatus.Fill.Color   := StatusBoja(Status);
+  rectStatus.Stroke.Kind  := TBrushKind.None;
 
   lblS := TLabel.Create(rectStatus);
   lblS.Parent := rectStatus;
-  lblS.Align := TAlignLayout.Client;
-  lblS.Text := Status;
-  lblS.TextSettings.Font.Size := 9;
-  lblS.TextSettings.FontColor := StatusBoja(Status);
-  lblS.TextSettings.HorzAlign := TTextAlign.Center;
+  lblS.Align  := TAlignLayout.Client;
+  lblS.Text   := Status;
+  lblS.TextSettings.Font.Size  := 9;
+  lblS.TextSettings.FontColor  := TAlphaColors.White;
+  lblS.TextSettings.HorzAlign  := TTextAlign.Center;
+  lblS.TextSettings.VertAlign  := TTextAlign.Center;
 
-  // separator line
-  lineSep := TLine.Create(rectRow);
-  lineSep.Parent := rectRow;
-  lineSep.Align := TAlignLayout.Bottom;
+  // Separator
+  lineSep := TLine.Create(Layout);
+  lineSep.Parent := Layout;
+  lineSep.Align  := TAlignLayout.Bottom;
   lineSep.Height := 1;
   lineSep.Stroke.Color := $FFEEEEEE;
-
-  Item.Parent := ListBoxZalihe;
 end;
 
 procedure TFormPregledZaliha.UcitajZalihe(Filter: string; Kat: string);
 var
   SQL: string;
   Kol, Min: Integer;
-  Status: string;
 begin
   ListBoxZalihe.Clear;
-
   SQL := 'SELECT naziv, kategorija, kolicina_na_stanju, min_kolicina, ' +
          'lokacija_u_magacinu FROM zalihe WHERE 1=1';
-
   if Trim(Filter) <> '' then
     SQL := SQL + ' AND naziv LIKE ''%' + Trim(Filter) + '%''';
   if (Kat <> '') and (Kat <> 'Sve kategorije') then
@@ -217,17 +213,15 @@ begin
 
   while not ADOQuery1.Eof do
   begin
-    Kol  := ADOQuery1.FieldByName('kolicina_na_stanju').AsInteger;
-    Min  := ADOQuery1.FieldByName('min_kolicina').AsInteger;
-    Status := StatusZalihe(Kol, Min);
-
+    Kol := ADOQuery1.FieldByName('kolicina_na_stanju').AsInteger;
+    Min := ADOQuery1.FieldByName('min_kolicina').AsInteger;
     DodajRed(
       ADOQuery1.FieldByName('naziv').AsString,
       ADOQuery1.FieldByName('kategorija').AsString,
       IntToStr(Kol) + ' kom.',
       IntToStr(Min),
       ADOQuery1.FieldByName('lokacija_u_magacinu').AsString,
-      Status
+      StatusZalihe(Kol, Min)
     );
     ADOQuery1.Next;
   end;
@@ -240,17 +234,29 @@ begin
 end;
 
 procedure TFormPregledZaliha.btnNovaNabavkaClick(Sender: TObject);
+var
+  F: TForm;
 begin
-  FormNovaNabavka.ShowModal;
-  UcitajZalihe(txtPretraga.Text,
-    ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  F := TForm(Application.FindComponent('FormNovaNabavka'));
+  if Assigned(F) then
+  begin
+    F.ShowModal;
+    UcitajZalihe(txtPretraga.Text,
+      ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  end;
 end;
 
 procedure TFormPregledZaliha.btnIzdajRobuClick(Sender: TObject);
+var
+  F: TForm;
 begin
-  FormIzdavanjeRobe.ShowModal;
-  UcitajZalihe(txtPretraga.Text,
-    ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  F := TForm(Application.FindComponent('FormIzdavanjeRobe'));
+  if Assigned(F) then
+  begin
+    F.ShowModal;
+    UcitajZalihe(txtPretraga.Text,
+      ComboKategorija.Items[ComboKategorija.ItemIndex]);
+  end;
 end;
 
 procedure TFormPregledZaliha.txtPretragaChange(Sender: TObject);

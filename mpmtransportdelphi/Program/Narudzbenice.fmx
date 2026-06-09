@@ -116,8 +116,6 @@ object FormNarudzbenice: TFormNarudzbenice
       Height = 554
       DefaultItemStyles.ItemStyle = ''
       ItemHeight = 60
-      Stroke.Kind = None
-      Fill.Color = xFFFFFFFF
     end
   end
   object RectBtnBar: TRectangle
@@ -132,9 +130,6 @@ object FormNarudzbenice: TFormNarudzbenice
       Width = 362
       Height = 36
       Text = '+ Nova narudzbenica'
-      TextSettings.FontColor = xFFFFFFFF
-      TextSettings.Font.Size = 12
-      StyleLookup = 'buttonstyle'
     end
   end
   object ADOConnection1: TADOConnection

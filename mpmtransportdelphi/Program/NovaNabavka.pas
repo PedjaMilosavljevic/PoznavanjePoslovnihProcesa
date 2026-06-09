@@ -11,29 +11,27 @@ uses
 
 type
   TFormNovaNabavka = class(TForm)
+    RectHeader: TRectangle;
     SpeedButton1: TSpeedButton;
-    Text1: TText;
-    // Polja forme
+    lblTitle: TLabel;
+    RectBody: TRectangle;
     lblDobavljac: TLabel;
     ComboDobavljac: TComboBox;
     lblArtikl: TLabel;
     ComboArtikl: TComboBox;
+    PanelInfo: TPanel;
+    lblTrenutnoStanje: TLabel;
+    lblMinimum: TLabel;
     lblKolicina: TLabel;
     txtKolicina: TEdit;
-    lblCenaPoKomadu: TLabel;
+    lblCena: TLabel;
     txtCena: TEdit;
     lblDatumIsporuke: TLabel;
     DatePickerIsporuka: TDateEdit;
     lblNapomena: TLabel;
     txtNapomena: TEdit;
-    // Info panel - trenutno stanje
-    PanelInfo: TPanel;
-    lblTrenutnoStanje: TLabel;
-    lblMinimum: TLabel;
-    // Dugmad
     btnSacuvaj: TButton;
     btnOtkazi: TButton;
-    // DB
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     ADOQuery2: TADOQuery;
@@ -48,8 +46,6 @@ type
     procedure PopuniArtikle;
     procedure PrikaziStanjeArtikla;
     function ValidacijaUnosa: Boolean;
-  public
-    { Public declarations }
   end;
 
 var
@@ -81,7 +77,8 @@ procedure TFormNovaNabavka.PopuniDobavljace;
 begin
   ComboDobavljac.Items.Clear;
   ADOQuery1.Close;
-  ADOQuery1.SQL.Text := 'SELECT id_dobavljaca, naziv_firme FROM dobavljaci ORDER BY naziv_firme';
+  ADOQuery1.SQL.Text :=
+    'SELECT id_dobavljaca, naziv_firme FROM dobavljaci ORDER BY naziv_firme';
   ADOQuery1.Open;
   while not ADOQuery1.Eof do
   begin
@@ -98,8 +95,7 @@ begin
   ComboArtikl.Items.Clear;
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
-    'SELECT id_artikla, naziv, kolicina_na_stanju, min_kolicina ' +
-    'FROM zalihe ORDER BY naziv';
+    'SELECT id_artikla, naziv FROM zalihe ORDER BY naziv';
   ADOQuery1.Open;
   while not ADOQuery1.Eof do
   begin
@@ -125,15 +121,12 @@ begin
     PanelInfo.Visible := False;
     Exit;
   end;
-
   IDArtikla := Integer(ComboArtikl.Items.Objects[ComboArtikl.ItemIndex]);
-
   ADOQuery2.Close;
   ADOQuery2.SQL.Text :=
-    'SELECT kolicina_na_stanju, min_kolicina FROM zalihe WHERE id_artikla = :id';
-  ADOQuery2.Parameters.ParamByName('id').Value := IDArtikla;
+    'SELECT kolicina_na_stanju, min_kolicina FROM zalihe WHERE id_artikla = ' +
+    IntToStr(IDArtikla);
   ADOQuery2.Open;
-
   if not ADOQuery2.Eof then
   begin
     lblTrenutnoStanje.Text := 'Trenutno na stanju: ' +
@@ -145,87 +138,73 @@ begin
 end;
 
 function TFormNovaNabavka.ValidacijaUnosa: Boolean;
+var
+  Kolicina: Integer;
 begin
   Result := False;
-
   if ComboDobavljac.ItemIndex = -1 then
   begin
     ShowMessage('Molimo izaberite dobavljaca.');
     Exit;
   end;
-
   if ComboArtikl.ItemIndex = -1 then
   begin
     ShowMessage('Molimo izaberite artikal.');
     Exit;
   end;
-
   if Trim(txtKolicina.Text) = '' then
   begin
     ShowMessage('Molimo unesite kolicinu.');
     Exit;
   end;
-
-  if not TryStrToInt(txtKolicina.Text, Integer(0)) or
-     (StrToInt(txtKolicina.Text) <= 0) then
+  if not TryStrToInt(txtKolicina.Text, Kolicina) or (Kolicina <= 0) then
   begin
     ShowMessage('Kolicina mora biti pozitivan ceo broj.');
     Exit;
   end;
-
   if Trim(txtCena.Text) = '' then
   begin
     ShowMessage('Molimo unesite cenu po komadu.');
     Exit;
   end;
-
   Result := True;
 end;
 
 procedure TFormNovaNabavka.btnSacuvajClick(Sender: TObject);
 var
   IDDobavljaca, IDArtikla, Kolicina: Integer;
-  CenaPoKomadu, UkupnaVrednost: Double;
-  DatumNaloga, DatumIsporuke: TDateTime;
+  Cena, Ukupno: Double;
 begin
   if not ValidacijaUnosa then
     Exit;
-
-  IDDobavljaca  := Integer(ComboDobavljac.Items.Objects[ComboDobavljac.ItemIndex]);
-  IDArtikla     := Integer(ComboArtikl.Items.Objects[ComboArtikl.ItemIndex]);
-  Kolicina      := StrToInt(txtKolicina.Text);
-  CenaPoKomadu  := StrToFloat(StringReplace(txtCena.Text, ',', '.', [rfReplaceAll]));
-  UkupnaVrednost := Kolicina * CenaPoKomadu;
-  DatumNaloga   := Now;
-  DatumIsporuke := DatePickerIsporuka.Date;
-
+  IDDobavljaca := Integer(ComboDobavljac.Items.Objects[ComboDobavljac.ItemIndex]);
+  IDArtikla    := Integer(ComboArtikl.Items.Objects[ComboArtikl.ItemIndex]);
+  Kolicina     := StrToInt(txtKolicina.Text);
+  Cena         := StrToFloat(StringReplace(txtCena.Text, ',', '.', [rfReplaceAll]));
+  Ukupno       := Kolicina * Cena;
   try
-    // Unos naloga za nabavku
     ADOQuery1.Close;
     ADOQuery1.SQL.Text :=
       'INSERT INTO nalog_nabavka ' +
       '(id_dobavljaca, id_artikla, kolicina, cena_po_komadu, ukupna_vrednost, ' +
       'datum_naloga, datum_isporuke, status, napomena) ' +
-      'VALUES (:dobavljac, :artikal, :kol, :cena, :ukupno, :datum, :isporuka, :status, :napomena)';
-
-    ADOQuery1.Parameters.ParamByName('dobavljac').Value := IDDobavljaca;
-    ADOQuery1.Parameters.ParamByName('artikal').Value   := IDArtikla;
-    ADOQuery1.Parameters.ParamByName('kol').Value       := Kolicina;
-    ADOQuery1.Parameters.ParamByName('cena').Value      := CenaPoKomadu;
-    ADOQuery1.Parameters.ParamByName('ukupno').Value    := UkupnaVrednost;
-    ADOQuery1.Parameters.ParamByName('datum').Value     := DatumNaloga;
-    ADOQuery1.Parameters.ParamByName('isporuka').Value  := DatumIsporuke;
-    ADOQuery1.Parameters.ParamByName('status').Value    := 'U obradi';
-    ADOQuery1.Parameters.ParamByName('napomena').Value  := Trim(txtNapomena.Text);
+      'VALUES (' +
+      IntToStr(IDDobavljaca) + ', ' +
+      IntToStr(IDArtikla) + ', ' +
+      IntToStr(Kolicina) + ', ' +
+      FloatToStr(Cena) + ', ' +
+      FloatToStr(Ukupno) + ', ' +
+      'Now(), ' +
+      '#' + FormatDateTime('mm/dd/yyyy', DatePickerIsporuka.Date) + '#, ' +
+      '''U obradi'', ' +
+      '''' + Trim(txtNapomena.Text) + ''')';
     ADOQuery1.ExecSQL;
-
     ShowMessage('Narudzbenica je uspesno kreirana!' + sLineBreak +
-                'Ukupna vrednost: ' + FormatFloat('#,##0.00', UkupnaVrednost) + ' RSD');
+      'Ukupna vrednost: ' + FormatFloat('#,##0.00', Ukupno) + ' RSD');
     ModalResult := mrOk;
-
   except
     on E: Exception do
-      ShowMessage('Greska pri cuvanju narudzbenice: ' + E.Message);
+      ShowMessage('Greska: ' + E.Message);
   end;
 end;
 
