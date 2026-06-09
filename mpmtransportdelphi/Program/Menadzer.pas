@@ -34,6 +34,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure DugmeIzaberiKorisnikaClick(Sender: TObject);
 
+    procedure ImageControl1Click(Sender: TObject);
+
   private
  procedure PopuniComboKorisnike;
   public
@@ -45,7 +47,7 @@ var
   Form3: TForm3;
 
 implementation
-uses Vozac;
+uses Vozac, PregledZaliha, NaloziIzdavanje, Narudzbenice;
 
 
 {$R *.fmx}
@@ -79,6 +81,14 @@ ADOConnection1.ConnectionString :=
   ADOConnection1.Connected := True;
   PopuniComboKorisnike;
 
+end;
+
+
+
+procedure TForm3.ImageControl1Click(Sender: TObject);
+begin
+    FormNaloziIzdavanje.Show;
+    Hide;
 end;
 
 procedure TForm3.SpeedButton1Click(Sender: TObject);

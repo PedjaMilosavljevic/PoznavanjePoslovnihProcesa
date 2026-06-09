@@ -278,17 +278,26 @@
             <Form>Form7</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="NaloziIzdavanje.pas">
-            <Form>FormNaloziIzdavanje</Form>
+        <DCCReference Include="Zalihe.pas">
+            <Form>FormZalihe</Form>
+        </DCCReference>
+        <DCCReference Include="PregledZaliha.pas">
+            <Form>FormPregledZaliha</Form>
             <FormType>fmx</FormType>
         </DCCReference>
         <DCCReference Include="Narudzbenice.pas">
             <Form>FormNarudzbenice</Form>
             <FormType>fmx</FormType>
         </DCCReference>
-        <DCCReference Include="PregledZaliha.pas">
-            <Form>FormPregledZaliha</Form>
+        <DCCReference Include="NaloziIzdavanje.pas">
+            <Form>FormNaloziIzdavanje</Form>
             <FormType>fmx</FormType>
+        </DCCReference>
+        <DCCReference Include="NovaNabavka.pas">
+            <Form>FormNovaNabavka</Form>
+        </DCCReference>
+        <DCCReference Include="IzdavanjeRobe.pas">
+            <Form>FormIzdavanjeRobe</Form>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

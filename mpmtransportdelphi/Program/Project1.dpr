@@ -10,9 +10,12 @@ uses
   Unit5 in 'Unit5.pas' {Form5},
   Klijent in 'Klijent.pas' {Form6},
   Vozac in 'Vozac.pas' {Form7},
-  NaloziIzdavanje in 'NaloziIzdavanje.pas' {FormNaloziIzdavanje},
+  Zalihe in 'Zalihe.pas' {FormZalihe},
+  PregledZaliha in 'PregledZaliha.pas' {FormPregledZaliha},
   Narudzbenice in 'Narudzbenice.pas' {FormNarudzbenice},
-  PregledZaliha in 'PregledZaliha.pas' {FormPregledZaliha};
+  NaloziIzdavanje in 'NaloziIzdavanje.pas' {FormNaloziIzdavanje},
+  NovaNabavka in 'NovaNabavka.pas' {FormNovaNabavka},
+  IzdavanjeRobe in 'IzdavanjeRobe.pas' {FormIzdavanjeRobe};
 
 {$R *.res}
 
@@ -25,8 +28,11 @@ begin
   Application.CreateForm(TForm5, Form5);
   Application.CreateForm(TForm6, Form6);
   Application.CreateForm(TForm7, Form7);
-  Application.CreateForm(TFormNaloziIzdavanje, FormNaloziIzdavanje);
-  Application.CreateForm(TFormNarudzbenice, FormNarudzbenice);
+  Application.CreateForm(TFormZalihe, FormZalihe);
   Application.CreateForm(TFormPregledZaliha, FormPregledZaliha);
+  Application.CreateForm(TFormNarudzbenice, FormNarudzbenice);
+  Application.CreateForm(TFormNaloziIzdavanje, FormNaloziIzdavanje);
+  Application.CreateForm(TFormNovaNabavka, FormNovaNabavka);
+  Application.CreateForm(TFormIzdavanjeRobe, FormIzdavanjeRobe);
   Application.Run;
 end.

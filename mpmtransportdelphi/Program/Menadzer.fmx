@@ -31,7 +31,7 @@ object Form3: TForm3
     Size.Height = 79.000000000000000000
     Size.PlatformDefault = False
     StyleLookup = 'PrijavaBtnStyle1'
-    TabOrder = 13
+    TabOrder = 14
     Text = 'Isporuke'
     TextSettings.Font.Size = 15.000000000000000000
     TextSettings.Font.StyleExt = {00070000000200000004000000}
@@ -152,6 +152,7 @@ object Form3: TForm3
     Size.Height = 41.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 19
+    OnClick = ImageControl1Click
   end
   object ADOQuery1: TADOQuery
     Connection = ADOConnection1

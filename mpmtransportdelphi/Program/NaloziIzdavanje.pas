@@ -1,4 +1,4 @@
-unit NaloziIzdavanje;
+﻿unit NaloziIzdavanje;
 
 interface
 
@@ -44,6 +44,8 @@ var
 implementation
 
 {$R *.fmx}
+
+uses Menadzer;
 
 // Nema uses IzdavanjeRobe ovde - koristimo ShowModal kroz Screen.FindForm
 
@@ -197,7 +199,7 @@ end;
 
 procedure TFormNaloziIzdavanje.SpeedButton1Click(Sender: TObject);
 begin
-  Form2.Show;
+  Form3.Show;
   Close;
 end;
 
