@@ -73,8 +73,7 @@ object FormIzdavanjeRobe: TFormIzdavanjeRobe
       Size.PlatformDefault = False
       TextSettings.Font.Size = 10.000000000000000000
       TextSettings.FontColor = xFF888888
-      Text = 'Vozac: '
-      OnClick = lblVozacImeClick
+      Text = 'Vozac:'
     end
     object lblArtikl: TLabel
       Position.X = 16.000000000000000000

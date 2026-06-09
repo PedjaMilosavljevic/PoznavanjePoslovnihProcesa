@@ -1,4 +1,4 @@
-﻿unit IzdavanjeRobe;
+unit IzdavanjeRobe;
 
 interface
 
@@ -56,12 +56,27 @@ implementation
 {$R *.fmx}
 
 procedure TFormIzdavanjeRobe.PoveziBazu;
+var
+  dbPath: string;
 begin
-  ADOConnection1.ConnectionString :=
-    'Provider=Microsoft.Jet.OLEDB.4.0;' +
-    'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
-  ADOConnection1.LoginPrompt := False;
-  ADOConnection1.Connected := True;
+  dbPath := ExtractFilePath(ParamStr(0)) + '..\..\..\Baza podataka\mpmtransport.mdb';
+
+  if not FileExists(dbPath) then
+  begin
+    ShowMessage('Baza ne postoji na lokaciji: ' + dbPath);
+    Exit;
+  end;
+
+  try
+    ADOConnection1.ConnectionString :=
+      'Provider=Microsoft.Jet.OLEDB.4.0;' +
+      'Data Source=' + dbPath + ';';
+    ADOConnection1.LoginPrompt := False;
+    ADOConnection1.Connected := True;
+  except
+    on E: Exception do
+      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
+  end;
 end;
 
 procedure TFormIzdavanjeRobe.FormCreate(Sender: TObject);
@@ -69,7 +84,7 @@ begin
   PoveziBazu;
   PopuniVozila;
   PopuniArtikle;
-  lblVozacIme.Text := 'Vozac: —';
+  lblVozacIme.Text := 'Vozac: -';
   PanelInfo.Visible := False;
 end;
 
@@ -78,13 +93,13 @@ begin
   ComboVozilo.Items.Clear;
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
-    'SELECT id_vozila, registarski_broj FROM vozila ORDER BY registarski_broj';
+    'SELECT ID, registarski_broj FROM Vozila ORDER BY registarski_broj';
   ADOQuery1.Open;
   while not ADOQuery1.Eof do
   begin
     ComboVozilo.Items.AddObject(
       ADOQuery1.FieldByName('registarski_broj').AsString,
-      TObject(ADOQuery1.FieldByName('id_vozila').AsInteger)
+      TObject(ADOQuery1.FieldByName('ID').AsInteger)
     );
     ADOQuery1.Next;
   end;
@@ -124,18 +139,18 @@ var
 begin
   if ComboVozilo.ItemIndex = -1 then
   begin
-    lblVozacIme.Text := 'Vozac: —';
+    lblVozacIme.Text := 'Vozac: -';
     Exit;
   end;
   IDVozila := Integer(ComboVozilo.Items.Objects[ComboVozilo.ItemIndex]);
   ADOQuery2.Close;
   ADOQuery2.SQL.Text :=
-    'SELECT registarski_broj FROM vozila WHERE id_vozila = ' + IntToStr(IDVozila);
+    'SELECT registarski_broj FROM Vozila WHERE ID = ' + IntToStr(IDVozila);
   ADOQuery2.Open;
   if not ADOQuery2.Eof then
     lblVozacIme.Text := 'Vozilo: ' + ADOQuery2.FieldByName('registarski_broj').AsString
   else
-    lblVozacIme.Text := 'Vozac: —';
+    lblVozacIme.Text := 'Vozac: -';
 end;
 
 procedure TFormIzdavanjeRobe.PrikaziInfoArtikla;

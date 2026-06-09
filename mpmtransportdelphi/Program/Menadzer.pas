@@ -47,7 +47,7 @@ var
   Form3: TForm3;
 
 implementation
-uses Vozac, PregledZaliha, NaloziIzdavanje, Narudzbenice;
+uses Vozac, PregledZaliha, NaloziIzdavanje, Narudzbenice, Zalihe;
 
 
 {$R *.fmx}
@@ -87,7 +87,7 @@ end;
 
 procedure TForm3.ImageControl1Click(Sender: TObject);
 begin
-    FormNaloziIzdavanje.Show;
+    FormZalihe.Show;
     Hide;
 end;
 
