@@ -55,6 +55,8 @@ implementation
 
 {$R *.fmx}
 
+uses Zalihe;
+
 procedure TFormNovaNabavka.PoveziBazu;
 begin
   ADOConnection1.ConnectionString :=
@@ -201,7 +203,8 @@ begin
     ADOQuery1.ExecSQL;
     ShowMessage('Narudzbenica je uspesno kreirana!' + sLineBreak +
       'Ukupna vrednost: ' + FormatFloat('#,##0.00', Ukupno) + ' RSD');
-    ModalResult := mrOk;
+    FormZalihe.Show;
+    Hide;
   except
     on E: Exception do
       ShowMessage('Greska: ' + E.Message);
@@ -210,12 +213,14 @@ end;
 
 procedure TFormNovaNabavka.btnOtkaziClick(Sender: TObject);
 begin
-  ModalResult := mrCancel;
+  FormZalihe.Show;
+  Hide;
 end;
 
 procedure TFormNovaNabavka.SpeedButton1Click(Sender: TObject);
 begin
-  ModalResult := mrCancel;
+  FormZalihe.Show;
+  Hide;
 end;
 
 end.

@@ -204,7 +204,6 @@ object FormNovaNabavka: TFormNovaNabavka
       Size.PlatformDefault = False
       Text = 'Otkazi'
       TextSettings.Trimming = None
-      OnClick = btnOtkaziClick
     end
   end
   object ADOConnection1: TADOConnection

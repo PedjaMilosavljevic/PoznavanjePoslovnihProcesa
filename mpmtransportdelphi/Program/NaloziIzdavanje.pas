@@ -45,7 +45,7 @@ implementation
 
 {$R *.fmx}
 
-uses Menadzer;
+uses Menadzer,Zalihe;
 
 // Nema uses IzdavanjeRobe ovde - koristimo ShowModal kroz Screen.FindForm
 
@@ -199,7 +199,7 @@ end;
 
 procedure TFormNaloziIzdavanje.SpeedButton1Click(Sender: TObject);
 begin
-  Form3.Show;
+  FormZalihe.Show;
   Close;
 end;
 

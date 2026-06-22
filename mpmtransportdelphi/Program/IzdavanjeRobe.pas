@@ -55,6 +55,8 @@ implementation
 
 {$R *.fmx}
 
+uses Zalihe;
+
 procedure TFormIzdavanjeRobe.PoveziBazu;
 var
   dbPath: string;

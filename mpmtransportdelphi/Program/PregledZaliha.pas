@@ -53,7 +53,7 @@ implementation
 
 {$R *.fmx}
 
-
+uses Zalihe;
 
 procedure TFormPregledZaliha.PoveziBazu;
 begin
@@ -229,7 +229,7 @@ end;
 
 procedure TFormPregledZaliha.SpeedButton1Click(Sender: TObject);
 begin
-  Form2.Show;
+  FormZalihe.Show;
   Close;
 end;
 

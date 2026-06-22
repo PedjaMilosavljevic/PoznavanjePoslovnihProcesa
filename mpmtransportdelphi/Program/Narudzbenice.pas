@@ -45,7 +45,7 @@ implementation
 
 {$R *.fmx}
 
-
+uses Zalihe;
 
 procedure TFormNarudzbenice.PoveziBazu;
 begin
@@ -197,8 +197,8 @@ end;
 
 procedure TFormNarudzbenice.SpeedButton1Click(Sender: TObject);
 begin
-  Form2.Show;
-  Close;
+  FormZalihe.Show;
+  Hide;
 end;
 
 procedure TFormNarudzbenice.btnNoviNalogClick(Sender: TObject);

@@ -26,6 +26,7 @@ object FormPregledZaliha: TFormPregledZaliha
       TextSettings.Font.Size = 18.000000000000000000
       TextSettings.FontColor = xFF222222
       TextSettings.Trimming = None
+      OnClick = SpeedButton1Click
     end
     object lblTitle: TLabel
       Position.X = 54.000000000000000000
