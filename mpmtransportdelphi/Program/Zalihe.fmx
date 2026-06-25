@@ -205,7 +205,7 @@ object FormZalihe: TFormZalihe
       Position.X = 14
       Position.Y = 200
       Width = 362
-      Height = 170
+      Height = 218
       Fill.Color = claWhite
       Stroke.Color = claLightgray
       XRadius = 8
@@ -250,6 +250,14 @@ object FormZalihe: TFormZalihe
         Height = 40
         Text = 'Nova Nabavka'
         OnClick = btnNovaNabavkaClick
+      end
+      object btnIzvestaji: TButton
+        Position.X = 12
+        Position.Y = 134
+        Width = 338
+        Height = 40
+        Text = 'Izvestaji'
+        OnClick = btnIzvestajiClick
       end
     end
   end

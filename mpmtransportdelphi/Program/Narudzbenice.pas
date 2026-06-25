@@ -36,7 +36,9 @@ type
     procedure PoveziBazu;
     procedure UcitajNabavke;
     function StatusBoja(Status: string): TAlphaColor;
-    procedure DodajRed(Broj, Dobavljac, Datum, Artikli, Vrednost, Status: string);
+    procedure DodajRed(Broj, Dobavljac, Datum, Artikli, Vrednost, Status: string;
+      IDNaloga: Integer);
+    procedure PotvrdiPrijemClick(Sender: TObject);
   end;
 
 var
@@ -93,7 +95,8 @@ begin
   else                                  Result := $FFE05050;
 end;
 
-procedure TFormNarudzbenice.DodajRed(Broj, Dobavljac, Datum, Artikli, Vrednost, Status: string);
+procedure TFormNarudzbenice.DodajRed(Broj, Dobavljac, Datum, Artikli, Vrednost, Status: string;
+  IDNaloga: Integer);
 var
   Item: TListBoxItem;
   Layout: TLayout;
@@ -101,9 +104,10 @@ var
   rectStatus: TRectangle;
   lblS: TLabel;
   lineSep: TLine;
+  btnPotvrdi: TButton;
 begin
   Item := TListBoxItem.Create(ListBoxNabavke);
-  Item.Height := 60;
+  Item.Height := 92;  // uniformna visina za sve redove (FMX TListBox ima problema sa promenljivom visinom)
   Item.Parent := ListBoxNabavke;
 
   Layout := TLayout.Create(Item);
@@ -185,11 +189,78 @@ begin
   lblS.TextSettings.HorzAlign := TTextAlign.Center;
   lblS.TextSettings.VertAlign := TTextAlign.Center;
 
+  // ── Dugme "Potvrdi prijem" - vidljivo samo za naloge 'U obradi' ──
+  btnPotvrdi := TButton.Create(Layout);
+  btnPotvrdi.Parent := Layout;
+  btnPotvrdi.Position.X := 10;
+  btnPotvrdi.Position.Y := 50;
+  btnPotvrdi.Width  := 372;
+  btnPotvrdi.Height := 34;
+  btnPotvrdi.Text   := 'Potvrdi prijem robe';
+  btnPotvrdi.Tag    := IDNaloga;
+  btnPotvrdi.OnClick := PotvrdiPrijemClick;
+  btnPotvrdi.Visible := (Status = 'U obradi');
+
   lineSep := TLine.Create(Layout);
   lineSep.Parent := Layout;
   lineSep.Align  := TAlignLayout.Bottom;
   lineSep.Height := 1;
   lineSep.Stroke.Color := $FFEEEEEE;
+end;
+
+procedure TFormNarudzbenice.PotvrdiPrijemClick(Sender: TObject);
+var
+  IDNaloga, IDArtikla, Kolicina: Integer;
+  TrenutniStatus: string;
+begin
+  IDNaloga := TButton(Sender).Tag;
+
+  // Provjeri trenutni status i ucitaj podatke o nalogu
+  ADOQuery1.Close;
+  ADOQuery1.SQL.Text :=
+    'SELECT id_artikla, kolicina, status FROM nalog_nabavka WHERE id_naloga = ' +
+    IntToStr(IDNaloga);
+  ADOQuery1.Open;
+
+  if ADOQuery1.Eof then
+  begin
+    ShowMessage('Nalog nije pronadjen.');
+    Exit;
+  end;
+
+  TrenutniStatus := ADOQuery1.FieldByName('status').AsString;
+  if TrenutniStatus <> 'U obradi' then
+  begin
+    ShowMessage('Ovaj nalog je vec obradjen (status: ' + TrenutniStatus + ').');
+    Exit;
+  end;
+
+  IDArtikla := ADOQuery1.FieldByName('id_artikla').AsInteger;
+  Kolicina  := ADOQuery1.FieldByName('kolicina').AsInteger;
+
+  try
+    // 1. Azuriraj status naloga na 'Primljeno'
+    ADOQuery1.Close;
+    ADOQuery1.SQL.Text :=
+      'UPDATE nalog_nabavka SET status = ''Primljeno'' WHERE id_naloga = ' +
+      IntToStr(IDNaloga);
+    ADOQuery1.ExecSQL;
+
+    // 2. Povecaj kolicinu na stanju za odgovarajuci artikal
+    ADOQuery1.Close;
+    ADOQuery1.SQL.Text :=
+      'UPDATE zalihe SET kolicina_na_stanju = kolicina_na_stanju + ' +
+      IntToStr(Kolicina) + ' WHERE id_artikla = ' + IntToStr(IDArtikla);
+    ADOQuery1.ExecSQL;
+
+    ShowMessage('Prijem robe je potvrdjen!' + sLineBreak +
+      'Zaliha je azurirana (+' + IntToStr(Kolicina) + ' kom.)');
+
+    UcitajNabavke;  // refresuj listu
+  except
+    on E: Exception do
+      ShowMessage('Greska pri potvrdi prijema: ' + E.Message);
+  end;
 end;
 
 procedure TFormNarudzbenice.UcitajNabavke;
@@ -212,7 +283,8 @@ begin
       FormatDateTime('dd.mm.yyyy', ADOQuery1.FieldByName('datum_naloga').AsDateTime),
       ADOQuery1.FieldByName('kolicina').AsString + ' stavki',
       FormatFloat('#,##0', ADOQuery1.FieldByName('ukupna_vrednost').AsFloat) + ' RSD',
-      ADOQuery1.FieldByName('status').AsString
+      ADOQuery1.FieldByName('status').AsString,
+      ADOQuery1.FieldByName('id_naloga').AsInteger
     );
     ADOQuery1.Next;
   end;

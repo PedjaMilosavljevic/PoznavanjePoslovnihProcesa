@@ -4,170 +4,146 @@ object FormNarudzbenice: TFormNarudzbenice
   Caption = 'Narudzbenice'
   ClientHeight = 700
   ClientWidth = 390
-  Fill.Kind = Solid
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  Fill.Kind = Solid
+  Fill.Color = xFFFFFFFF
+  DesignerMasterStyle = 0
   OnCreate = FormCreate
   OnShow = FormShow
-  DesignerMasterStyle = 0
   object RectHeader: TRectangle
     Align = Top
-    Fill.Color = claWhite
-    Size.Width = 390.000000000000000000
-    Size.Height = 60.000000000000000000
-    Size.PlatformDefault = False
+    Height = 60
+    Width = 390
+    Fill.Color = xFFFFFFFF
     Stroke.Kind = None
     object SpeedButton1: TSpeedButton
-      Position.X = 14.000000000000000000
-      Position.Y = 16.000000000000000000
-      Size.Width = 32.000000000000000000
-      Size.Height = 32.000000000000000000
-      Size.PlatformDefault = False
+      Position.X = 14
+      Position.Y = 16
+      Width = 32
+      Height = 32
       Text = '<'
-      TextSettings.Font.Size = 18.000000000000000000
       TextSettings.FontColor = xFF222222
-      TextSettings.Trimming = None
+      TextSettings.Font.Size = 18
       OnClick = SpeedButton1Click
     end
     object lblTitle: TLabel
-      Position.X = 54.000000000000000000
-      Position.Y = 12.000000000000000000
-      Size.Width = 280.000000000000000000
-      Size.Height = 36.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.Size = 22.000000000000000000
-      TextSettings.Font.StyleExt = {00070000000000000004000000}
-      TextSettings.FontColor = xFF111111
+      Position.X = 54
+      Position.Y = 12
+      Width = 280
+      Height = 36
       Text = 'Narudzbenice'
+      TextSettings.FontColor = xFF111111
+      TextSettings.Font.Size = 22
+      TextSettings.Font.Style = [fsBold]
     end
     object Line1: TLine
-      LineType = Diagonal
-      Position.Y = 58.000000000000000000
-      Size.Width = 390.000000000000000000
-      Size.Height = 2.000000000000000000
-      Size.PlatformDefault = False
+      Position.X = 0
+      Position.Y = 58
+      Width = 390
+      Height = 2
       Stroke.Color = xFFDDDDDD
     end
   end
   object RectTableHeader: TRectangle
-    Fill.Color = claWhitesmoke
-    Position.Y = 62.000000000000000000
-    Size.Width = 390.000000000000000000
-    Size.Height = 28.000000000000000000
-    Size.PlatformDefault = False
+    Position.X = 0
+    Position.Y = 62
+    Width = 390
+    Height = 28
+    Fill.Color = xFFF5F5F5
     Stroke.Kind = None
     object lblHBroj: TLabel
-      Position.X = 10.000000000000000000
-      Position.Y = 7.000000000000000000
-      Size.Width = 74.000000000000000000
-      Size.Height = 14.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.Size = 10.000000000000000000
-      TextSettings.FontColor = xFF888888
+      Position.X = 10
+      Position.Y = 7
+      Width = 74
+      Height = 14
       Text = 'Broj'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
     end
     object lblHDob: TLabel
-      Position.X = 86.000000000000000000
-      Position.Y = 7.000000000000000000
-      Size.Width = 70.000000000000000000
-      Size.Height = 14.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.Size = 10.000000000000000000
-      TextSettings.FontColor = xFF888888
+      Position.X = 86
+      Position.Y = 7
+      Width = 70
+      Height = 14
       Text = 'Dobavljac'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
     end
     object lblHDatum: TLabel
-      Position.X = 160.000000000000000000
-      Position.Y = 7.000000000000000000
-      Size.Width = 60.000000000000000000
-      Size.Height = 14.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.Size = 10.000000000000000000
-      TextSettings.FontColor = xFF888888
+      Position.X = 160
+      Position.Y = 7
+      Width = 60
+      Height = 14
       Text = 'Datum'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
     end
     object lblHArtikli: TLabel
-      Position.X = 224.000000000000000000
-      Position.Y = 7.000000000000000000
-      Size.Width = 44.000000000000000000
-      Size.Height = 14.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.Size = 10.000000000000000000
-      TextSettings.FontColor = xFF888888
+      Position.X = 224
+      Position.Y = 7
+      Width = 44
+      Height = 14
       Text = 'Artikli'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
     end
     object lblHVred: TLabel
-      Position.X = 272.000000000000000000
-      Position.Y = 7.000000000000000000
-      Size.Width = 52.000000000000000000
-      Size.Height = 14.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.Size = 10.000000000000000000
-      TextSettings.FontColor = xFF888888
+      Position.X = 272
+      Position.Y = 7
+      Width = 52
+      Height = 14
       Text = 'Vrednost'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
     end
     object lblHStatus: TLabel
-      Position.X = 332.000000000000000000
-      Position.Y = 7.000000000000000000
-      Size.Width = 48.000000000000000000
-      Size.Height = 14.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.Size = 10.000000000000000000
-      TextSettings.FontColor = xFF888888
+      Position.X = 332
+      Position.Y = 7
+      Width = 48
+      Height = 14
       Text = 'Status'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
     end
   end
   object ScrollBox1: TScrollBox
-    Position.Y = 90.000000000000000000
-    Size.Width = 390.000000000000000000
-    Size.Height = 554.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 2
-    Viewport.Width = 390.000000000000000000
-    Viewport.Height = 554.000000000000000000
+    Position.X = 0
+    Position.Y = 90
+    Width = 390
+    Height = 554
     object ListBoxNabavke: TListBox
       Align = Client
-      Size.Width = 390.000000000000000000
-      Size.Height = 554.000000000000000000
-      Size.PlatformDefault = False
-      TabOrder = 0
-      DisableFocusEffect = True
-      ItemHeight = 60.000000000000000000
+      Width = 390
+      Height = 554
       DefaultItemStyles.ItemStyle = ''
-      DefaultItemStyles.GroupHeaderStyle = ''
-      DefaultItemStyles.GroupFooterStyle = ''
-      Viewport.Width = 386.000000000000000000
-      Viewport.Height = 550.000000000000000000
+      ItemHeight = 92
     end
   end
   object RectBtnBar: TRectangle
     Align = Bottom
-    Fill.Color = claWhite
-    Position.Y = 644.000000000000000000
-    Size.Width = 390.000000000000000000
-    Size.Height = 56.000000000000000000
-    Size.PlatformDefault = False
+    Height = 56
+    Width = 390
+    Fill.Color = xFFFFFFFF
     Stroke.Color = xFFDDDDDD
     object btnNoviNalog: TButton
-      Position.X = 14.000000000000000000
-      Position.Y = 10.000000000000000000
-      Size.Width = 362.000000000000000000
-      Size.Height = 36.000000000000000000
-      Size.PlatformDefault = False
+      Position.X = 14
+      Position.Y = 10
+      Width = 362
+      Height = 36
       Text = '+ Nova narudzbenica'
-      TextSettings.Trimming = None
       OnClick = btnNoviNalogClick
     end
   end
   object ADOConnection1: TADOConnection
+    ConnectionString = ''
     LoginPrompt = False
     Left = 350
     Top = 10
   end
   object ADOQuery1: TADOQuery
     Connection = ADOConnection1
-    Parameters = <>
     Left = 350
     Top = 50
   end

@@ -47,6 +47,7 @@ type
     procedure btnNabavkeClick(Sender: TObject);
     procedure btnIzdavanjaClick(Sender: TObject);
     procedure btnNovaNabavkaClick(Sender: TObject);
+    procedure btnIzvestajiClick(Sender: TObject);
   private
     procedure PoveziBazu;
     procedure UcitajMetrike;
@@ -182,6 +183,20 @@ begin
     F.Show;
     Hide;
   end;
+end;
+
+procedure TFormZalihe.btnIzvestajiClick(Sender: TObject);
+var
+  F: TForm;
+begin
+  F := TForm(Application.FindComponent('FormIzvestaji'));
+  if Assigned(F) then
+  begin
+    F.Show;
+    Hide;
+  end
+  else
+    ShowMessage('Forma za izvestaje nije ucitana u projekat.');
 end;
 
 end.

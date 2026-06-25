@@ -196,7 +196,7 @@ begin
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
     'SELECT ni.id_izdavanja, v.registarski_broj, ni.datum_izdavanja, ' +
-    '       ni.status, z.naziv, ni.kolicina ' +
+    '       ni.status, z.naziv, ni.kolicina, ni.korisnik ' +
     'FROM (nalog_izdavanje ni ' +
     'INNER JOIN Vozila v ON v.ID = ni.id_vozila) ' +
     'INNER JOIN zalihe z ON z.id_artikla = ni.id_artikla ' +
@@ -209,7 +209,7 @@ begin
       '#IZD-' + ADOQuery1.FieldByName('id_izdavanja').AsString,
       ADOQuery1.FieldByName('registarski_broj').AsString,
       FormatDateTime('dd.mm.yyyy', ADOQuery1.FieldByName('datum_izdavanja').AsDateTime),
-      '—',
+      ADOQuery1.FieldByName('korisnik').AsString,
       ADOQuery1.FieldByName('naziv').AsString + ' x ' +
         ADOQuery1.FieldByName('kolicina').AsString,
       ADOQuery1.FieldByName('status').AsString

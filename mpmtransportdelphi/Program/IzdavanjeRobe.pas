@@ -25,6 +25,8 @@ type
     lblLokacija: TLabel;
     lblKolicina: TLabel;
     txtKolicina: TEdit;
+    lblKorisnik: TLabel;
+    txtKorisnik: TEdit;
     lblNapomena: TLabel;
     txtNapomena: TEdit;
     btnIzdaj: TButton;
@@ -196,6 +198,11 @@ begin
     ShowMessage('Molimo izaberite artikal.');
     Exit;
   end;
+  if Trim(txtKorisnik.Text) = '' then
+  begin
+    ShowMessage('Molimo unesite ime i prezime korisnika koji preuzima robu.');
+    Exit;
+  end;
   if Trim(txtKolicina.Text) = '' then
   begin
     ShowMessage('Molimo unesite kolicinu.');
@@ -251,14 +258,15 @@ begin
     ADOQuery1.Close;
     ADOQuery1.SQL.Text :=
       'INSERT INTO nalog_izdavanje ' +
-      '(id_vozila, id_artikla, kolicina, datum_izdavanja, status, napomena) ' +
+      '(id_vozila, id_artikla, kolicina, datum_izdavanja, status, napomena, korisnik) ' +
       'VALUES (' +
       IntToStr(IDVozila) + ', ' +
       IntToStr(IDArtikla) + ', ' +
       IntToStr(Kolicina) + ', ' +
       'Now(), ' +
       '''Izdato'', ' +
-      '''' + Trim(txtNapomena.Text) + ''')';
+      '''' + Trim(txtNapomena.Text) + ''', ' +
+      '''' + Trim(txtKorisnik.Text) + ''')';
     ADOQuery1.ExecSQL;
 
     ADOQuery2.Close;
