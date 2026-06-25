@@ -46,6 +46,7 @@ type
     procedure PrikaziVozacaZaVozilo;
     procedure PrikaziInfoArtikla;
     function ValidacijaUnosa: Boolean;
+    procedure VratiSeNaPrethodnu;
   end;
 
 var
@@ -206,11 +207,23 @@ begin
     Exit;
   end;
   IDArtikla := Integer(ComboArtikl.Items.Objects[ComboArtikl.ItemIndex]);
-  ADOQuery3.Close;
-  ADOQuery3.SQL.Text :=
-    'SELECT kolicina_na_stanju FROM zalihe WHERE id_artikla = ' + IntToStr(IDArtikla);
-  ADOQuery3.Open;
-  KolicinaNaStanju := ADOQuery3.FieldByName('kolicina_na_stanju').AsInteger;
+
+  if not ADOConnection1.Connected then
+    PoveziBazu;
+
+  try
+    ADOQuery3.Close;
+    ADOQuery3.SQL.Text :=
+      'SELECT kolicina_na_stanju FROM zalihe WHERE id_artikla = ' + IntToStr(IDArtikla);
+    ADOQuery3.Open;
+    KolicinaNaStanju := ADOQuery3.FieldByName('kolicina_na_stanju').AsInteger;
+  except
+    on E: Exception do
+    begin
+      ShowMessage('Greska pri provjeri stanja: ' + E.Message);
+      Exit;
+    end;
+  end;
   if Kolicina > KolicinaNaStanju then
   begin
     ShowMessage('Nema dovoljno na stanju!' + sLineBreak +
@@ -230,6 +243,10 @@ begin
   IDVozila  := Integer(ComboVozilo.Items.Objects[ComboVozilo.ItemIndex]);
   IDArtikla := Integer(ComboArtikl.Items.Objects[ComboArtikl.ItemIndex]);
   Kolicina  := StrToInt(txtKolicina.Text);
+
+  if not ADOConnection1.Connected then
+    PoveziBazu;
+
   try
     ADOQuery1.Close;
     ADOQuery1.SQL.Text :=
@@ -252,21 +269,38 @@ begin
     ADOQuery2.ExecSQL;
 
     ShowMessage('Roba je uspesno izdata!');
-    ModalResult := mrOk;
+    VratiSeNaPrethodnu;
   except
     on E: Exception do
       ShowMessage('Greska: ' + E.Message);
   end;
 end;
 
+procedure TFormIzdavanjeRobe.VratiSeNaPrethodnu;
+var
+  F: TForm;
+begin
+  F := TForm(Application.FindComponent(PrethodnaFormaZalihe));
+  if Assigned(F) then
+  begin
+    F.Show;
+    Hide;
+  end
+  else
+  begin
+    FormZalihe.Show;
+    Hide;
+  end;
+end;
+
 procedure TFormIzdavanjeRobe.btnOtkaziClick(Sender: TObject);
 begin
-  ModalResult := mrCancel;
+  VratiSeNaPrethodnu;
 end;
 
 procedure TFormIzdavanjeRobe.SpeedButton1Click(Sender: TObject);
 begin
-  ModalResult := mrCancel;
+  VratiSeNaPrethodnu;
 end;
 
 end.

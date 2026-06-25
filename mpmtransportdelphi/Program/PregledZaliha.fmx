@@ -8,6 +8,8 @@ object FormPregledZaliha: TFormPregledZaliha
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnShow = FormShow
   DesignerMasterStyle = 0
   object RectHeader: TRectangle
     Align = Top
@@ -63,6 +65,7 @@ object FormPregledZaliha: TFormPregledZaliha
       Size.Height = 32.000000000000000000
       Size.PlatformDefault = False
       TextPrompt = 'Pretrazi artikle...'
+      OnChangeTracking = txtPretragaChange
     end
     object ComboKategorija: TComboBox
       Position.X = 242.000000000000000000
@@ -70,6 +73,7 @@ object FormPregledZaliha: TFormPregledZaliha
       Size.Width = 134.000000000000000000
       Size.Height = 32.000000000000000000
       Size.PlatformDefault = False
+      OnChange = ComboKategorijaChange
     end
   end
   object RectTableHeader: TRectangle
@@ -90,8 +94,8 @@ object FormPregledZaliha: TFormPregledZaliha
       Text = 'Naziv'
     end
     object lblHKat: TLabel
-      Position.X = 86.000000000000000000
-      Position.Y = 6.000000000000000000
+      Position.X = 118.000000000000000000
+      Position.Y = 7.000000000000000000
       Size.Width = 68.000000000000000000
       Size.Height = 14.000000000000000000
       Size.PlatformDefault = False
@@ -100,9 +104,9 @@ object FormPregledZaliha: TFormPregledZaliha
       Text = 'Kategorija'
     end
     object lblHStanje: TLabel
-      Position.X = 154.000000000000000000
-      Position.Y = 8.000000000000000000
-      Size.Width = 63.000000000000000000
+      Position.X = 192.000000000000000000
+      Position.Y = 7.000000000000000000
+      Size.Width = 50.000000000000000000
       Size.Height = 14.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Font.Size = 10.000000000000000000
@@ -110,9 +114,9 @@ object FormPregledZaliha: TFormPregledZaliha
       Text = 'Na stanju'
     end
     object lblHMin: TLabel
-      Position.X = 235.000000000000000000
-      Position.Y = 8.000000000000000000
-      Size.Width = 33.000000000000000000
+      Position.X = 246.000000000000000000
+      Position.Y = 7.000000000000000000
+      Size.Width = 24.000000000000000000
       Size.Height = 14.000000000000000000
       Size.PlatformDefault = False
       TextSettings.Font.Size = 10.000000000000000000
@@ -179,6 +183,7 @@ object FormPregledZaliha: TFormPregledZaliha
       Size.PlatformDefault = False
       Text = '+ Nova nabavka'
       TextSettings.Trimming = None
+      OnClick = btnNovaNabavkaClick
     end
     object btnIzdajRobu: TButton
       Position.X = 196.000000000000000000
@@ -188,6 +193,7 @@ object FormPregledZaliha: TFormPregledZaliha
       Size.PlatformDefault = False
       Text = 'Izdaj robu'
       TextSettings.Trimming = None
+      OnClick = btnIzdajRobuClick
     end
   end
   object ADOConnection1: TADOConnection

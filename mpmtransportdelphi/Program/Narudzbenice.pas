@@ -29,6 +29,7 @@ type
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnNoviNalogClick(Sender: TObject);
   private
@@ -47,18 +48,40 @@ implementation
 
 uses Zalihe;
 
+
+
 procedure TFormNarudzbenice.PoveziBazu;
+var
+  dbPath: string;
 begin
-  ADOConnection1.ConnectionString :=
-    'Provider=Microsoft.Jet.OLEDB.4.0;' +
-    'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
-  ADOConnection1.LoginPrompt := False;
-  ADOConnection1.Connected   := True;
+  dbPath := ExtractFilePath(ParamStr(0)) + '..\..\..\Baza podataka\mpmtransport.mdb';
+
+  if not FileExists(dbPath) then
+  begin
+    ShowMessage('Baza ne postoji na lokaciji: ' + dbPath);
+    Exit;
+  end;
+
+  try
+    ADOConnection1.ConnectionString :=
+      'Provider=Microsoft.Jet.OLEDB.4.0;' +
+      'Data Source=' + dbPath + ';';
+    ADOConnection1.LoginPrompt := False;
+    ADOConnection1.Connected := True;
+  except
+    on E: Exception do
+      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
+  end;
 end;
 
 procedure TFormNarudzbenice.FormCreate(Sender: TObject);
 begin
   PoveziBazu;
+  UcitajNabavke;
+end;
+
+procedure TFormNarudzbenice.FormShow(Sender: TObject);
+begin
   UcitajNabavke;
 end;
 
@@ -205,11 +228,12 @@ procedure TFormNarudzbenice.btnNoviNalogClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormNarudzbenice';
   F := TForm(Application.FindComponent('FormNovaNabavka'));
   if Assigned(F) then
   begin
-    F.ShowModal;
-    UcitajNabavke;
+    F.Show;
+    Hide;
   end
   else
     ShowMessage('Forma za nabavku nije ucitana u projekat.');

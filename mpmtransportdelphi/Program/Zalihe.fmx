@@ -4,294 +4,260 @@ object FormZalihe: TFormZalihe
   Caption = 'Upravljanje Zalihama'
   ClientHeight = 640
   ClientWidth = 390
-  Fill.Color = claLightgray
   Fill.Kind = Solid
+  Fill.Color = claLightgray
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
   OnCreate = FormCreate
+  OnShow = FormShow
   DesignerMasterStyle = 0
   object RectHeader: TRectangle
     Align = Top
+    Height = 55
+    Width = 390
     Fill.Color = claLightgray
-    Size.Width = 390.000000000000000000
-    Size.Height = 55.000000000000000000
-    Size.PlatformDefault = False
     Stroke.Kind = None
     object SpeedButton1: TSpeedButton
-      Position.X = 8.000000000000000000
-      Position.Y = 14.000000000000000000
-      Size.Width = 33.000000000000000000
-      Size.Height = 22.000000000000000000
+      Position.X = 8
+      Position.Y = 14
+      Size.Width = 33
+      Size.Height = 22
       Size.PlatformDefault = False
       StyleLookup = 'arrowlefttoolbutton'
       Text = 'SpeedButton1'
-      TextSettings.Trimming = None
       OnClick = SpeedButton1Click
     end
     object lblTitle: TLabel
-      Position.X = 50.000000000000000000
-      Position.Y = 10.000000000000000000
-      Size.Width = 280.000000000000000000
-      Size.Height = 30.000000000000000000
-      Size.PlatformDefault = False
-      TextSettings.Font.Size = 15.000000000000000000
-      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      Position.X = 50
+      Position.Y = 10
+      Width = 280
+      Height = 30
       Text = 'Upravljanje Zalihama'
+      TextSettings.Font.Size = 15
+      TextSettings.Font.Style = [fsBold]
     end
   end
   object ScrollBox1: TScrollBox
     Align = Client
-    Size.Width = 390.000000000000000000
-    Size.Height = 530.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 1
-    Viewport.Width = 390.000000000000000000
-    Viewport.Height = 530.000000000000000000
+    Width = 390
+    Height = 530
     object RectMetrike: TRectangle
+      Position.X = 14
+      Position.Y = 10
+      Width = 362
+      Height = 180
       Fill.Color = claWhite
-      Position.X = 14.000000000000000000
-      Position.Y = 10.000000000000000000
-      Size.Width = 362.000000000000000000
-      Size.Height = 180.000000000000000000
-      Size.PlatformDefault = False
       Stroke.Color = claLightgray
-      XRadius = 8.000000000000000000
-      YRadius = 8.000000000000000000
+      XRadius = 8
+      YRadius = 8
       object RectUkupno: TRectangle
+        Position.X = 8
+        Position.Y = 8
+        Width = 168
+        Height = 78
         Fill.Color = claWhitesmoke
-        Position.X = 8.000000000000000000
-        Position.Y = 8.000000000000000000
-        Size.Width = 168.000000000000000000
-        Size.Height = 78.000000000000000000
-        Size.PlatformDefault = False
         Stroke.Color = claLightgray
-        XRadius = 6.000000000000000000
-        YRadius = 6.000000000000000000
+        XRadius = 6
+        YRadius = 6
         object lblUkupnoCaption: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 10.000000000000000000
-          Size.Width = 148.000000000000000000
-          Size.Height = 16.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 10.000000000000000000
-          TextSettings.FontColor = xFF888888
+          Position.X = 10
+          Position.Y = 10
+          Width = 148
+          Height = 16
           Text = 'Ukupno artikala'
+          TextSettings.Font.Size = 10
+          TextSettings.FontColor = xFF888888
         end
         object lblUkupno: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 28.000000000000000000
-          Size.Width = 148.000000000000000000
-          Size.Height = 28.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 22.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Position.X = 10
+          Position.Y = 28
+          Width = 148
+          Height = 28
           Text = '0'
+          TextSettings.Font.Size = 22
+          TextSettings.Font.Style = [fsBold]
         end
         object lblUkupnoSub: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 58.000000000000000000
-          Size.Width = 148.000000000000000000
-          Size.Height = 14.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 9.000000000000000000
-          TextSettings.FontColor = xFF1D9E75
+          Position.X = 10
+          Position.Y = 58
+          Width = 148
+          Height = 14
           Text = 'artikala u sistemu'
+          TextSettings.Font.Size = 9
+          TextSettings.FontColor = xFF1D9E75
         end
       end
       object RectKriticno: TRectangle
+        Position.X = 184
+        Position.Y = 8
+        Width = 170
+        Height = 78
         Fill.Color = claWhitesmoke
-        Position.X = 184.000000000000000000
-        Position.Y = 8.000000000000000000
-        Size.Width = 170.000000000000000000
-        Size.Height = 78.000000000000000000
-        Size.PlatformDefault = False
         Stroke.Color = claLightgray
-        XRadius = 6.000000000000000000
-        YRadius = 6.000000000000000000
+        XRadius = 6
+        YRadius = 6
         object lblKriticnoCaption: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 10.000000000000000000
-          Size.Width = 150.000000000000000000
-          Size.Height = 16.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 10.000000000000000000
-          TextSettings.FontColor = xFF888888
+          Position.X = 10
+          Position.Y = 10
+          Width = 150
+          Height = 16
           Text = 'Kriticne zalihe'
+          TextSettings.Font.Size = 10
+          TextSettings.FontColor = xFF888888
         end
         object lblKriticno: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 28.000000000000000000
-          Size.Width = 150.000000000000000000
-          Size.Height = 28.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 22.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
-          TextSettings.FontColor = xFFE05050
+          Position.X = 10
+          Position.Y = 28
+          Width = 150
+          Height = 28
           Text = '0'
+          TextSettings.Font.Size = 22
+          TextSettings.Font.Style = [fsBold]
+          TextSettings.FontColor = xFFE05050
         end
         object lblKriticnoSub: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 58.000000000000000000
-          Size.Width = 150.000000000000000000
-          Size.Height = 14.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 9.000000000000000000
-          TextSettings.FontColor = xFFE05050
+          Position.X = 10
+          Position.Y = 58
+          Width = 150
+          Height = 14
           Text = 'ispod minimuma'
+          TextSettings.Font.Size = 9
+          TextSettings.FontColor = xFFE05050
         end
       end
       object RectNabavke: TRectangle
+        Position.X = 8
+        Position.Y = 94
+        Width = 168
+        Height = 78
         Fill.Color = claWhitesmoke
-        Position.X = 8.000000000000000000
-        Position.Y = 94.000000000000000000
-        Size.Width = 168.000000000000000000
-        Size.Height = 78.000000000000000000
-        Size.PlatformDefault = False
         Stroke.Color = claLightgray
-        XRadius = 6.000000000000000000
-        YRadius = 6.000000000000000000
+        XRadius = 6
+        YRadius = 6
         object lblNabavkeCaption: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 10.000000000000000000
-          Size.Width = 148.000000000000000000
-          Size.Height = 16.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 10.000000000000000000
-          TextSettings.FontColor = xFF888888
+          Position.X = 10
+          Position.Y = 10
+          Width = 148
+          Height = 16
           Text = 'Narudzbenice u toku'
+          TextSettings.Font.Size = 10
+          TextSettings.FontColor = xFF888888
         end
         object lblNabavke: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 28.000000000000000000
-          Size.Width = 148.000000000000000000
-          Size.Height = 28.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 22.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Position.X = 10
+          Position.Y = 28
+          Width = 148
+          Height = 28
           Text = '0'
+          TextSettings.Font.Size = 22
+          TextSettings.Font.Style = [fsBold]
         end
         object lblNabavkeSub: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 58.000000000000000000
-          Size.Width = 148.000000000000000000
-          Size.Height = 14.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 9.000000000000000000
-          TextSettings.FontColor = xFF888888
+          Position.X = 10
+          Position.Y = 58
+          Width = 148
+          Height = 14
           Text = 'aktivnih naloga'
+          TextSettings.Font.Size = 9
+          TextSettings.FontColor = xFF888888
         end
       end
       object RectIzdavanja: TRectangle
+        Position.X = 184
+        Position.Y = 94
+        Width = 170
+        Height = 78
         Fill.Color = claWhitesmoke
-        Position.X = 184.000000000000000000
-        Position.Y = 94.000000000000000000
-        Size.Width = 170.000000000000000000
-        Size.Height = 78.000000000000000000
-        Size.PlatformDefault = False
         Stroke.Color = claLightgray
-        XRadius = 6.000000000000000000
-        YRadius = 6.000000000000000000
+        XRadius = 6
+        YRadius = 6
         object lblIzdavanjaCaption: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 10.000000000000000000
-          Size.Width = 150.000000000000000000
-          Size.Height = 16.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 10.000000000000000000
-          TextSettings.FontColor = xFF888888
+          Position.X = 10
+          Position.Y = 10
+          Width = 150
+          Height = 16
           Text = 'Izdavanja danas'
+          TextSettings.Font.Size = 10
+          TextSettings.FontColor = xFF888888
         end
         object lblIzdavanja: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 28.000000000000000000
-          Size.Width = 150.000000000000000000
-          Size.Height = 28.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 22.000000000000000000
-          TextSettings.Font.StyleExt = {00070000000000000004000000}
+          Position.X = 10
+          Position.Y = 28
+          Width = 150
+          Height = 28
           Text = '0'
+          TextSettings.Font.Size = 22
+          TextSettings.Font.Style = [fsBold]
         end
         object lblIzdavanjaSub: TLabel
-          Position.X = 10.000000000000000000
-          Position.Y = 58.000000000000000000
-          Size.Width = 150.000000000000000000
-          Size.Height = 14.000000000000000000
-          Size.PlatformDefault = False
-          TextSettings.Font.Size = 9.000000000000000000
-          TextSettings.FontColor = xFF888888
+          Position.X = 10
+          Position.Y = 58
+          Width = 150
+          Height = 14
           Text = 'danas izdato'
+          TextSettings.Font.Size = 9
+          TextSettings.FontColor = xFF888888
         end
       end
     end
     object RectBrzaPristup: TRectangle
+      Position.X = 14
+      Position.Y = 200
+      Width = 362
+      Height = 170
       Fill.Color = claWhite
-      Position.X = 14.000000000000000000
-      Position.Y = 200.000000000000000000
-      Size.Width = 362.000000000000000000
-      Size.Height = 170.000000000000000000
-      Size.PlatformDefault = False
       Stroke.Color = claLightgray
-      XRadius = 8.000000000000000000
-      YRadius = 8.000000000000000000
+      XRadius = 8
+      YRadius = 8
       object lblBrzPristupTitle: TLabel
-        Position.X = 12.000000000000000000
-        Position.Y = 12.000000000000000000
-        Size.Width = 200.000000000000000000
-        Size.Height = 18.000000000000000000
-        Size.PlatformDefault = False
-        TextSettings.Font.StyleExt = {00070000000000000004000000}
+        Position.X = 12
+        Position.Y = 12
+        Width = 200
+        Height = 18
         Text = 'Brzi pristup'
+        TextSettings.Font.Size = 12
+        TextSettings.Font.Style = [fsBold]
       end
       object btnArtikli: TButton
-        Position.X = 12.000000000000000000
-        Position.Y = 38.000000000000000000
-        Size.Width = 162.000000000000000000
-        Size.Height = 40.000000000000000000
-        Size.PlatformDefault = False
+        Position.X = 12
+        Position.Y = 38
+        Width = 162
+        Height = 40
         Text = 'Pregled Artikala'
-        TextSettings.Trimming = None
         OnClick = btnArtikliClick
       end
       object btnNabavke: TButton
-        Position.X = 188.000000000000000000
-        Position.Y = 38.000000000000000000
-        Size.Width = 162.000000000000000000
-        Size.Height = 40.000000000000000000
-        Size.PlatformDefault = False
+        Position.X = 188
+        Position.Y = 38
+        Width = 162
+        Height = 40
         Text = 'Narudzbenice'
-        TextSettings.Trimming = None
         OnClick = btnNabavkeClick
       end
       object btnIzdavanja: TButton
-        Position.X = 12.000000000000000000
-        Position.Y = 86.000000000000000000
-        Size.Width = 162.000000000000000000
-        Size.Height = 40.000000000000000000
-        Size.PlatformDefault = False
+        Position.X = 12
+        Position.Y = 86
+        Width = 162
+        Height = 40
         Text = 'Izdavanja'
-        TextSettings.Trimming = None
         OnClick = btnIzdavanjaClick
       end
       object btnNovaNabavka: TButton
-        Position.X = 188.000000000000000000
-        Position.Y = 86.000000000000000000
-        Size.Width = 162.000000000000000000
-        Size.Height = 40.000000000000000000
-        Size.PlatformDefault = False
+        Position.X = 188
+        Position.Y = 86
+        Width = 162
+        Height = 40
         Text = 'Nova Nabavka'
-        TextSettings.Trimming = None
         OnClick = btnNovaNabavkaClick
       end
     end
   end
   object RectNavBar: TRectangle
     Align = Bottom
+    Height = 55
+    Width = 390
     Fill.Color = claWhite
-    Position.Y = 585.000000000000000000
-    Size.Width = 390.000000000000000000
-    Size.Height = 55.000000000000000000
-    Size.PlatformDefault = False
     Stroke.Color = claLightgray
   end
   object ADOConnection1: TADOConnection
@@ -301,7 +267,6 @@ object FormZalihe: TFormZalihe
   end
   object ADOQuery1: TADOQuery
     Connection = ADOConnection1
-    Parameters = <>
     Left = 340
     Top = 56
   end

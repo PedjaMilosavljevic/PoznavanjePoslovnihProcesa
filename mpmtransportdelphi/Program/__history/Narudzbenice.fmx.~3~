@@ -1,0 +1,150 @@
+object FormNarudzbenice: TFormNarudzbenice
+  Left = 0
+  Top = 0
+  Caption = 'Narudzbenice'
+  ClientHeight = 700
+  ClientWidth = 390
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Fill.Kind = Solid
+  Fill.Color = xFFFFFFFF
+  DesignerMasterStyle = 0
+  OnCreate = FormCreate
+  OnShow = FormShow
+  object RectHeader: TRectangle
+    Align = Top
+    Height = 60
+    Width = 390
+    Fill.Color = xFFFFFFFF
+    Stroke.Kind = None
+    object SpeedButton1: TSpeedButton
+      Position.X = 14
+      Position.Y = 16
+      Width = 32
+      Height = 32
+      Text = '<'
+      TextSettings.FontColor = xFF222222
+      TextSettings.Font.Size = 18
+      OnClick = SpeedButton1Click
+    end
+    object lblTitle: TLabel
+      Position.X = 54
+      Position.Y = 12
+      Width = 280
+      Height = 36
+      Text = 'Narudzbenice'
+      TextSettings.FontColor = xFF111111
+      TextSettings.Font.Size = 22
+      TextSettings.Font.Style = [fsBold]
+    end
+    object Line1: TLine
+      Position.X = 0
+      Position.Y = 58
+      Width = 390
+      Height = 2
+      Stroke.Color = xFFDDDDDD
+    end
+  end
+  object RectTableHeader: TRectangle
+    Position.X = 0
+    Position.Y = 62
+    Width = 390
+    Height = 28
+    Fill.Color = xFFF5F5F5
+    Stroke.Kind = None
+    object lblHBroj: TLabel
+      Position.X = 10
+      Position.Y = 7
+      Width = 74
+      Height = 14
+      Text = 'Broj'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHDob: TLabel
+      Position.X = 86
+      Position.Y = 7
+      Width = 70
+      Height = 14
+      Text = 'Dobavljac'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHDatum: TLabel
+      Position.X = 160
+      Position.Y = 7
+      Width = 60
+      Height = 14
+      Text = 'Datum'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHArtikli: TLabel
+      Position.X = 224
+      Position.Y = 7
+      Width = 44
+      Height = 14
+      Text = 'Artikli'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHVred: TLabel
+      Position.X = 272
+      Position.Y = 7
+      Width = 52
+      Height = 14
+      Text = 'Vrednost'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHStatus: TLabel
+      Position.X = 332
+      Position.Y = 7
+      Width = 48
+      Height = 14
+      Text = 'Status'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+  end
+  object ScrollBox1: TScrollBox
+    Position.X = 0
+    Position.Y = 90
+    Width = 390
+    Height = 554
+    object ListBoxNabavke: TListBox
+      Align = Client
+      Width = 390
+      Height = 554
+      DefaultItemStyles.ItemStyle = ''
+      ItemHeight = 60
+    end
+  end
+  object RectBtnBar: TRectangle
+    Align = Bottom
+    Height = 56
+    Width = 390
+    Fill.Color = xFFFFFFFF
+    Stroke.Color = xFFDDDDDD
+    object btnNoviNalog: TButton
+      Position.X = 14
+      Position.Y = 10
+      Width = 362
+      Height = 36
+      Text = '+ Nova narudzbenica'
+      OnClick = btnNoviNalogClick
+    end
+  end
+  object ADOConnection1: TADOConnection
+    ConnectionString = ''
+    LoginPrompt = False
+    Left = 350
+    Top = 10
+  end
+  object ADOQuery1: TADOQuery
+    Connection = ADOConnection1
+    Left = 350
+    Top = 50
+  end
+end

@@ -8,6 +8,8 @@ object FormNaloziIzdavanje: TFormNaloziIzdavanje
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnShow = FormShow
   DesignerMasterStyle = 0
   object RectHeader: TRectangle
     Align = Top
@@ -155,6 +157,7 @@ object FormNaloziIzdavanje: TFormNaloziIzdavanje
       Size.PlatformDefault = False
       Text = '+ Novi nalog za izdavanje'
       TextSettings.Trimming = None
+      OnClick = btnNoviNalogClick
     end
   end
   object ADOConnection1: TADOConnection

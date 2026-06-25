@@ -1,0 +1,181 @@
+object FormPregledZaliha: TFormPregledZaliha
+  Left = 0
+  Top = 0
+  Caption = 'Pregled Zaliha'
+  ClientHeight = 700
+  ClientWidth = 390
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  Fill.Kind = Solid
+  Fill.Color = xFFFFFFFF
+  DesignerMasterStyle = 0
+  OnCreate = FormCreate
+  OnShow = FormShow
+  object RectHeader: TRectangle
+    Align = Top
+    Height = 60
+    Width = 390
+    Fill.Color = xFFFFFFFF
+    Stroke.Kind = None
+    object SpeedButton1: TSpeedButton
+      Position.X = 14
+      Position.Y = 16
+      Width = 32
+      Height = 32
+      Text = '<'
+      TextSettings.FontColor = xFF222222
+      TextSettings.Font.Size = 18
+      OnClick = SpeedButton1Click
+    end
+    object lblTitle: TLabel
+      Position.X = 54
+      Position.Y = 12
+      Width = 280
+      Height = 36
+      Text = 'Pregled Zaliha'
+      TextSettings.FontColor = xFF111111
+      TextSettings.Font.Size = 22
+      TextSettings.Font.Style = [fsBold]
+    end
+    object Line1: TLine
+      Position.X = 0
+      Position.Y = 58
+      Width = 390
+      Height = 2
+      Stroke.Color = xFFDDDDDD
+    end
+  end
+  object RectFilter: TRectangle
+    Position.X = 0
+    Position.Y = 60
+    Width = 390
+    Height = 46
+    Fill.Color = xFFFFFFFF
+    Stroke.Kind = None
+    object txtPretraga: TEdit
+      Position.X = 14
+      Position.Y = 8
+      Width = 220
+      Height = 32
+      TextPrompt = 'Pretrazi artikle...'
+      OnChangeTracking = txtPretragaChange
+    end
+    object ComboKategorija: TComboBox
+      Position.X = 242
+      Position.Y = 8
+      Width = 134
+      Height = 32
+      OnChange = ComboKategorijaChange
+    end
+  end
+  object RectTableHeader: TRectangle
+    Position.X = 0
+    Position.Y = 106
+    Width = 390
+    Height = 28
+    Fill.Color = xFFF5F5F5
+    Stroke.Kind = None
+    object lblHNaziv: TLabel
+      Position.X = 10
+      Position.Y = 7
+      Width = 100
+      Height = 14
+      Text = 'Naziv'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHKat: TLabel
+      Position.X = 118
+      Position.Y = 7
+      Width = 68
+      Height = 14
+      Text = 'Kategorija'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHStanje: TLabel
+      Position.X = 192
+      Position.Y = 7
+      Width = 50
+      Height = 14
+      Text = 'Na stanju'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHMin: TLabel
+      Position.X = 246
+      Position.Y = 7
+      Width = 24
+      Height = 14
+      Text = 'Min.'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHLok: TLabel
+      Position.X = 276
+      Position.Y = 7
+      Width = 50
+      Height = 14
+      Text = 'Lokacija'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+    object lblHStatus: TLabel
+      Position.X = 334
+      Position.Y = 7
+      Width = 46
+      Height = 14
+      Text = 'Status'
+      TextSettings.FontColor = xFF888888
+      TextSettings.Font.Size = 10
+    end
+  end
+  object ScrollBox1: TScrollBox
+    Position.X = 0
+    Position.Y = 134
+    Width = 390
+    Height = 510
+    object ListBoxZalihe: TListBox
+      Align = Client
+      Width = 390
+      Height = 510
+      DefaultItemStyles.ItemStyle = ''
+      ItemHeight = 52
+    end
+  end
+  object RectBtnBar: TRectangle
+    Align = Bottom
+    Height = 56
+    Width = 390
+    Fill.Color = xFFFFFFFF
+    Stroke.Color = xFFDDDDDD
+    object btnNovaNabavka: TButton
+      Position.X = 14
+      Position.Y = 10
+      Width = 172
+      Height = 36
+      Text = '+ Nova nabavka'
+      OnClick = btnNovaNabavkaClick
+    end
+    object btnIzdajRobu: TButton
+      Position.X = 196
+      Position.Y = 10
+      Width = 172
+      Height = 36
+      Text = 'Izdaj robu'
+      OnClick = btnIzdajRobuClick
+    end
+  end
+  object ADOConnection1: TADOConnection
+    ConnectionString = ''
+    LoginPrompt = False
+    Left = 350
+    Top = 10
+  end
+  object ADOQuery1: TADOQuery
+    Connection = ADOConnection1
+    Left = 350
+    Top = 50
+  end
+end

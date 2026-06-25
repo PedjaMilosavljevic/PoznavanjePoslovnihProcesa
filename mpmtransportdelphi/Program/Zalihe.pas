@@ -41,6 +41,7 @@ type
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnArtikliClick(Sender: TObject);
     procedure btnNabavkeClick(Sender: TObject);
@@ -53,6 +54,7 @@ type
 
 var
   FormZalihe: TFormZalihe;
+  PrethodnaFormaZalihe: string = 'FormZalihe';  // pamti odakle se doslo
 
 implementation
 
@@ -85,6 +87,11 @@ end;
 procedure TFormZalihe.FormCreate(Sender: TObject);
 begin
   PoveziBazu;
+  UcitajMetrike;
+end;
+
+procedure TFormZalihe.FormShow(Sender: TObject);
+begin
   UcitajMetrike;
 end;
 
@@ -138,6 +145,7 @@ procedure TFormZalihe.btnArtikliClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormZalihe';
   F := TForm(Application.FindComponent('FormPregledZaliha'));
   if Assigned(F) then F.Show;
   Hide;
@@ -147,6 +155,7 @@ procedure TFormZalihe.btnNabavkeClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormZalihe';
   F := TForm(Application.FindComponent('FormNarudzbenice'));
   if Assigned(F) then F.Show;
   Hide;
@@ -156,6 +165,7 @@ procedure TFormZalihe.btnIzdavanjaClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormZalihe';
   F := TForm(Application.FindComponent('FormNaloziIzdavanje'));
   if Assigned(F) then F.Show;
   Hide;
@@ -165,6 +175,7 @@ procedure TFormZalihe.btnNovaNabavkaClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormZalihe';
   F := TForm(Application.FindComponent('FormNovaNabavka'));
   if Assigned(F) then
   begin

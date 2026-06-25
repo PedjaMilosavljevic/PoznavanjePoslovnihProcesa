@@ -8,6 +8,8 @@ object FormNarudzbenice: TFormNarudzbenice
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnShow = FormShow
   DesignerMasterStyle = 0
   object RectHeader: TRectangle
     Align = Top
@@ -155,6 +157,7 @@ object FormNarudzbenice: TFormNarudzbenice
       Size.PlatformDefault = False
       Text = '+ Nova narudzbenica'
       TextSettings.Trimming = None
+      OnClick = btnNoviNalogClick
     end
   end
   object ADOConnection1: TADOConnection
