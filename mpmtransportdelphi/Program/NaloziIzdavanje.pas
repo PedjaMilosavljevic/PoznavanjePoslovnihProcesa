@@ -29,6 +29,7 @@ type
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnNoviNalogClick(Sender: TObject);
   private
@@ -45,22 +46,42 @@ implementation
 
 {$R *.fmx}
 
-uses Menadzer;
+uses Zalihe;
 
 // Nema uses IzdavanjeRobe ovde - koristimo ShowModal kroz Screen.FindForm
 
 procedure TFormNaloziIzdavanje.PoveziBazu;
+var
+  dbPath: string;
 begin
-  ADOConnection1.ConnectionString :=
-    'Provider=Microsoft.Jet.OLEDB.4.0;' +
-    'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
-  ADOConnection1.LoginPrompt := False;
-  ADOConnection1.Connected   := True;
+  dbPath := ExtractFilePath(ParamStr(0)) + '..\..\..\Baza podataka\mpmtransport.mdb';
+
+  if not FileExists(dbPath) then
+  begin
+    ShowMessage('Baza ne postoji na lokaciji: ' + dbPath);
+    Exit;
+  end;
+
+  try
+    ADOConnection1.ConnectionString :=
+      'Provider=Microsoft.Jet.OLEDB.4.0;' +
+      'Data Source=' + dbPath + ';';
+    ADOConnection1.LoginPrompt := False;
+    ADOConnection1.Connected := True;
+  except
+    on E: Exception do
+      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
+  end;
 end;
 
 procedure TFormNaloziIzdavanje.FormCreate(Sender: TObject);
 begin
   PoveziBazu;
+  UcitajIzdavanja;
+end;
+
+procedure TFormNaloziIzdavanje.FormShow(Sender: TObject);
+begin
   UcitajIzdavanja;
 end;
 
@@ -175,9 +196,9 @@ begin
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
     'SELECT ni.id_izdavanja, v.registarski_broj, ni.datum_izdavanja, ' +
-    '       ni.status, z.naziv, ni.kolicina ' +
-    'FROM nalog_izdavanje ni ' +
-    'INNER JOIN vozila v ON v.id_vozila  = ni.id_vozila ' +
+    '       ni.status, z.naziv, ni.kolicina, ni.korisnik ' +
+    'FROM (nalog_izdavanje ni ' +
+    'INNER JOIN Vozila v ON v.ID = ni.id_vozila) ' +
     'INNER JOIN zalihe z ON z.id_artikla = ni.id_artikla ' +
     'ORDER BY ni.datum_izdavanja DESC';
   ADOQuery1.Open;
@@ -188,7 +209,7 @@ begin
       '#IZD-' + ADOQuery1.FieldByName('id_izdavanja').AsString,
       ADOQuery1.FieldByName('registarski_broj').AsString,
       FormatDateTime('dd.mm.yyyy', ADOQuery1.FieldByName('datum_izdavanja').AsDateTime),
-      '—',
+      ADOQuery1.FieldByName('korisnik').AsString,
       ADOQuery1.FieldByName('naziv').AsString + ' x ' +
         ADOQuery1.FieldByName('kolicina').AsString,
       ADOQuery1.FieldByName('status').AsString
@@ -199,20 +220,20 @@ end;
 
 procedure TFormNaloziIzdavanje.SpeedButton1Click(Sender: TObject);
 begin
-  Form3.Show;
-  Close;
+  FormZalihe.Show;
+  Hide;
 end;
 
 procedure TFormNaloziIzdavanje.btnNoviNalogClick(Sender: TObject);
 var
   F: TForm;
 begin
-  // Otvaramo IzdavanjeRobe formu dinamicki da izbegnemo circular uses
+  PrethodnaFormaZalihe := 'FormNaloziIzdavanje';
   F := TForm(Application.FindComponent('FormIzdavanjeRobe'));
   if Assigned(F) then
   begin
-    F.ShowModal;
-    UcitajIzdavanja;
+    F.Show;
+    Hide;
   end
   else
     ShowMessage('Forma za izdavanje nije ucitana u projekat.');

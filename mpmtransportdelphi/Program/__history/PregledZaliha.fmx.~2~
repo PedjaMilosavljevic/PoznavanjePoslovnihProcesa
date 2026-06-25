@@ -1,0 +1,203 @@
+object FormPregledZaliha: TFormPregledZaliha
+  Left = 0
+  Top = 0
+  Caption = 'Pregled Zaliha'
+  ClientHeight = 700
+  ClientWidth = 390
+  Fill.Kind = Solid
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object RectHeader: TRectangle
+    Align = Top
+    Fill.Color = claWhite
+    Size.Width = 390.000000000000000000
+    Size.Height = 60.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object SpeedButton1: TSpeedButton
+      Position.X = 14.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 32.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      Text = '<'
+      TextSettings.Font.Size = 18.000000000000000000
+      TextSettings.FontColor = xFF222222
+      TextSettings.Trimming = None
+    end
+    object lblTitle: TLabel
+      Position.X = 54.000000000000000000
+      Position.Y = 12.000000000000000000
+      Size.Width = 280.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 22.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = xFF111111
+      Text = 'Pregled Zaliha'
+    end
+    object Line1: TLine
+      LineType = Diagonal
+      Position.Y = 58.000000000000000000
+      Size.Width = 390.000000000000000000
+      Size.Height = 2.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Color = xFFDDDDDD
+    end
+  end
+  object RectFilter: TRectangle
+    Fill.Color = claWhite
+    Position.Y = 60.000000000000000000
+    Size.Width = 390.000000000000000000
+    Size.Height = 46.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object txtPretraga: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      Position.X = 14.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 220.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+      TextPrompt = 'Pretrazi artikle...'
+    end
+    object ComboKategorija: TComboBox
+      Position.X = 242.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 134.000000000000000000
+      Size.Height = 32.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object RectTableHeader: TRectangle
+    Fill.Color = claWhitesmoke
+    Position.Y = 106.000000000000000000
+    Size.Width = 390.000000000000000000
+    Size.Height = 28.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+    object lblHNaziv: TLabel
+      Position.X = 10.000000000000000000
+      Position.Y = 7.000000000000000000
+      Size.Width = 100.000000000000000000
+      Size.Height = 14.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      TextSettings.FontColor = xFF888888
+      Text = 'Naziv'
+    end
+    object lblHKat: TLabel
+      Position.X = 86.000000000000000000
+      Position.Y = 6.000000000000000000
+      Size.Width = 68.000000000000000000
+      Size.Height = 14.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      TextSettings.FontColor = xFF888888
+      Text = 'Kategorija'
+    end
+    object lblHStanje: TLabel
+      Position.X = 154.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 63.000000000000000000
+      Size.Height = 14.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      TextSettings.FontColor = xFF888888
+      Text = 'Na stanju'
+    end
+    object lblHMin: TLabel
+      Position.X = 235.000000000000000000
+      Position.Y = 8.000000000000000000
+      Size.Width = 33.000000000000000000
+      Size.Height = 14.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      TextSettings.FontColor = xFF888888
+      Text = 'Min.'
+    end
+    object lblHLok: TLabel
+      Position.X = 276.000000000000000000
+      Position.Y = 7.000000000000000000
+      Size.Width = 50.000000000000000000
+      Size.Height = 14.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      TextSettings.FontColor = xFF888888
+      Text = 'Lokacija'
+    end
+    object lblHStatus: TLabel
+      Position.X = 334.000000000000000000
+      Position.Y = 7.000000000000000000
+      Size.Width = 46.000000000000000000
+      Size.Height = 14.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Size = 10.000000000000000000
+      TextSettings.FontColor = xFF888888
+      Text = 'Status'
+    end
+  end
+  object ScrollBox1: TScrollBox
+    Position.Y = 134.000000000000000000
+    Size.Width = 390.000000000000000000
+    Size.Height = 510.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Viewport.Width = 390.000000000000000000
+    Viewport.Height = 510.000000000000000000
+    object ListBoxZalihe: TListBox
+      Align = Client
+      Size.Width = 390.000000000000000000
+      Size.Height = 510.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      DisableFocusEffect = True
+      ItemHeight = 52.000000000000000000
+      DefaultItemStyles.ItemStyle = ''
+      DefaultItemStyles.GroupHeaderStyle = ''
+      DefaultItemStyles.GroupFooterStyle = ''
+      Viewport.Width = 386.000000000000000000
+      Viewport.Height = 506.000000000000000000
+    end
+  end
+  object RectBtnBar: TRectangle
+    Align = Bottom
+    Fill.Color = claWhite
+    Position.Y = 644.000000000000000000
+    Size.Width = 390.000000000000000000
+    Size.Height = 56.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Color = xFFDDDDDD
+    object btnNovaNabavka: TButton
+      Position.X = 14.000000000000000000
+      Position.Y = 10.000000000000000000
+      Size.Width = 172.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      Text = '+ Nova nabavka'
+      TextSettings.Trimming = None
+    end
+    object btnIzdajRobu: TButton
+      Position.X = 196.000000000000000000
+      Position.Y = 10.000000000000000000
+      Size.Width = 172.000000000000000000
+      Size.Height = 36.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Izdaj robu'
+      TextSettings.Trimming = None
+    end
+  end
+  object ADOConnection1: TADOConnection
+    LoginPrompt = False
+    Left = 350
+    Top = 10
+  end
+  object ADOQuery1: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <>
+    Left = 350
+    Top = 50
+  end
+end

@@ -15,7 +15,8 @@ uses
   Narudzbenice in 'Narudzbenice.pas' {FormNarudzbenice},
   NaloziIzdavanje in 'NaloziIzdavanje.pas' {FormNaloziIzdavanje},
   NovaNabavka in 'NovaNabavka.pas' {FormNovaNabavka},
-  IzdavanjeRobe in 'IzdavanjeRobe.pas' {FormIzdavanjeRobe};
+  IzdavanjeRobe in 'IzdavanjeRobe.pas' {FormIzdavanjeRobe},
+  IzvestajiZalihe in 'IzvestajiZalihe.pas' {FormIzvestaji};
 
 {$R *.res}
 
@@ -34,5 +35,6 @@ begin
   Application.CreateForm(TFormNaloziIzdavanje, FormNaloziIzdavanje);
   Application.CreateForm(TFormNovaNabavka, FormNovaNabavka);
   Application.CreateForm(TFormIzdavanjeRobe, FormIzdavanjeRobe);
+  Application.CreateForm(TFormIzvestaji, FormIzvestaji);
   Application.Run;
 end.

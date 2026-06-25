@@ -33,6 +33,7 @@ type
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnNovaNabavkaClick(Sender: TObject);
     procedure btnIzdajRobuClick(Sender: TObject);
@@ -53,15 +54,32 @@ implementation
 
 {$R *.fmx}
 
+uses Zalihe;
+
 
 
 procedure TFormPregledZaliha.PoveziBazu;
+var
+  dbPath: string;
 begin
-  ADOConnection1.ConnectionString :=
-    'Provider=Microsoft.Jet.OLEDB.4.0;' +
-    'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
-  ADOConnection1.LoginPrompt := False;
-  ADOConnection1.Connected   := True;
+  dbPath := ExtractFilePath(ParamStr(0)) + '..\..\..\Baza podataka\mpmtransport.mdb';
+
+  if not FileExists(dbPath) then
+  begin
+    ShowMessage('Baza ne postoji na lokaciji: ' + dbPath);
+    Exit;
+  end;
+
+  try
+    ADOConnection1.ConnectionString :=
+      'Provider=Microsoft.Jet.OLEDB.4.0;' +
+      'Data Source=' + dbPath + ';';
+    ADOConnection1.LoginPrompt := False;
+    ADOConnection1.Connected := True;
+  except
+    on E: Exception do
+      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
+  end;
 end;
 
 procedure TFormPregledZaliha.FormCreate(Sender: TObject);
@@ -74,6 +92,12 @@ begin
   ComboKategorija.Items.Add('Alati i oprema');
   ComboKategorija.ItemIndex := 0;
   UcitajZalihe;
+end;
+
+procedure TFormPregledZaliha.FormShow(Sender: TObject);
+begin
+  UcitajZalihe(txtPretraga.Text,
+    ComboKategorija.Items[ComboKategorija.ItemIndex]);
 end;
 
 function TFormPregledZaliha.StatusZalihe(Kol, Min: Integer): string;
@@ -229,20 +253,20 @@ end;
 
 procedure TFormPregledZaliha.SpeedButton1Click(Sender: TObject);
 begin
-  Form2.Show;
-  Close;
+  FormZalihe.Show;
+  Hide;
 end;
 
 procedure TFormPregledZaliha.btnNovaNabavkaClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormPregledZaliha';
   F := TForm(Application.FindComponent('FormNovaNabavka'));
   if Assigned(F) then
   begin
-    F.ShowModal;
-    UcitajZalihe(txtPretraga.Text,
-      ComboKategorija.Items[ComboKategorija.ItemIndex]);
+    F.Show;
+    Hide;
   end;
 end;
 
@@ -250,12 +274,12 @@ procedure TFormPregledZaliha.btnIzdajRobuClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormPregledZaliha';
   F := TForm(Application.FindComponent('FormIzdavanjeRobe'));
   if Assigned(F) then
   begin
-    F.ShowModal;
-    UcitajZalihe(txtPretraga.Text,
-      ComboKategorija.Items[ComboKategorija.ItemIndex]);
+    F.Show;
+    Hide;
   end;
 end;
 

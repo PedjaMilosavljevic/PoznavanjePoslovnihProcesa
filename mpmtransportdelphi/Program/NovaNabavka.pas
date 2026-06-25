@@ -46,6 +46,7 @@ type
     procedure PopuniArtikle;
     procedure PrikaziStanjeArtikla;
     function ValidacijaUnosa: Boolean;
+    procedure VratiSeNaPrethodnu;
   end;
 
 var
@@ -55,13 +56,30 @@ implementation
 
 {$R *.fmx}
 
+uses Zalihe;
+
 procedure TFormNovaNabavka.PoveziBazu;
+var
+  dbPath: string;
 begin
-  ADOConnection1.ConnectionString :=
-    'Provider=Microsoft.Jet.OLEDB.4.0;' +
-    'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
-  ADOConnection1.LoginPrompt := False;
-  ADOConnection1.Connected := True;
+  dbPath := ExtractFilePath(ParamStr(0)) + '..\..\..\Baza podataka\mpmtransport.mdb';
+
+  if not FileExists(dbPath) then
+  begin
+    ShowMessage('Baza ne postoji na lokaciji: ' + dbPath);
+    Exit;
+  end;
+
+  try
+    ADOConnection1.ConnectionString :=
+      'Provider=Microsoft.Jet.OLEDB.4.0;' +
+      'Data Source=' + dbPath + ';';
+    ADOConnection1.LoginPrompt := False;
+    ADOConnection1.Connected := True;
+  except
+    on E: Exception do
+      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
+  end;
 end;
 
 procedure TFormNovaNabavka.FormCreate(Sender: TObject);
@@ -201,21 +219,38 @@ begin
     ADOQuery1.ExecSQL;
     ShowMessage('Narudzbenica je uspesno kreirana!' + sLineBreak +
       'Ukupna vrednost: ' + FormatFloat('#,##0.00', Ukupno) + ' RSD');
-    ModalResult := mrOk;
+    VratiSeNaPrethodnu;
   except
     on E: Exception do
       ShowMessage('Greska: ' + E.Message);
   end;
 end;
 
+procedure TFormNovaNabavka.VratiSeNaPrethodnu;
+var
+  F: TForm;
+begin
+  F := TForm(Application.FindComponent(PrethodnaFormaZalihe));
+  if Assigned(F) then
+  begin
+    F.Show;
+    Hide;
+  end
+  else
+  begin
+    FormZalihe.Show;
+    Hide;
+  end;
+end;
+
 procedure TFormNovaNabavka.btnOtkaziClick(Sender: TObject);
 begin
-  ModalResult := mrCancel;
+  VratiSeNaPrethodnu;
 end;
 
 procedure TFormNovaNabavka.SpeedButton1Click(Sender: TObject);
 begin
-  ModalResult := mrCancel;
+  VratiSeNaPrethodnu;
 end;
 
 end.

@@ -10,6 +10,8 @@ object FormNarudzbenice: TFormNarudzbenice
   Fill.Kind = Solid
   Fill.Color = xFFFFFFFF
   DesignerMasterStyle = 0
+  OnCreate = FormCreate
+  OnShow = FormShow
   object RectHeader: TRectangle
     Align = Top
     Height = 60
@@ -24,6 +26,7 @@ object FormNarudzbenice: TFormNarudzbenice
       Text = '<'
       TextSettings.FontColor = xFF222222
       TextSettings.Font.Size = 18
+      OnClick = SpeedButton1Click
     end
     object lblTitle: TLabel
       Position.X = 54
@@ -115,7 +118,7 @@ object FormNarudzbenice: TFormNarudzbenice
       Width = 390
       Height = 554
       DefaultItemStyles.ItemStyle = ''
-      ItemHeight = 60
+      ItemHeight = 92
     end
   end
   object RectBtnBar: TRectangle
@@ -130,6 +133,7 @@ object FormNarudzbenice: TFormNarudzbenice
       Width = 362
       Height = 36
       Text = '+ Nova narudzbenica'
+      OnClick = btnNoviNalogClick
     end
   end
   object ADOConnection1: TADOConnection

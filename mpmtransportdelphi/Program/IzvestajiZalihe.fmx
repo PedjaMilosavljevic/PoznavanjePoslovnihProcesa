@@ -1,0 +1,234 @@
+object FormIzvestaji: TFormIzvestaji
+  Left = 0
+  Top = 0
+  Caption = 'Izvestaji'
+  ClientHeight = 700
+  ClientWidth = 390
+  Fill.Kind = Solid
+  Fill.Color = xFFFFFFFF
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object RectHeader: TRectangle
+    Align = Top
+    Height = 55
+    Width = 390
+    Fill.Color = xFFFFFFFF
+    Stroke.Kind = None
+    object SpeedButton1: TSpeedButton
+      Position.X = 8
+      Position.Y = 14
+      Size.Width = 33
+      Size.Height = 22
+      Size.PlatformDefault = False
+      StyleLookup = 'arrowlefttoolbutton'
+      Text = 'SpeedButton1'
+      OnClick = SpeedButton1Click
+    end
+    object Text1: TText
+      Position.X = 50
+      Position.Y = 10
+      Width = 280
+      Height = 30
+      Text = 'Izvestaji'
+      TextSettings.Font.Size = 18
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.FontColor = xFF111111
+    end
+  end
+  object PanelSumarno: TPanel
+    Position.X = 8
+    Position.Y = 60
+    Width = 374
+    Height = 70
+    object lblUkupnoNabavljeno: TLabel
+      Position.X = 8
+      Position.Y = 6
+      Width = 358
+      Height = 18
+      Text = 'Ukupno nabavljeno: —'
+      TextSettings.Font.Size = 10
+      TextSettings.FontColor = xFF1D9E75
+    end
+    object lblUkupnoIzdato: TLabel
+      Position.X = 8
+      Position.Y = 26
+      Width = 358
+      Height = 18
+      Text = 'Ukupno izdato: —'
+      TextSettings.Font.Size = 10
+      TextSettings.FontColor = xFF555555
+    end
+    object lblVrednostZaliha: TLabel
+      Position.X = 8
+      Position.Y = 46
+      Width = 358
+      Height = 18
+      Text = 'Vrednost zaliha: —'
+      TextSettings.Font.Size = 10
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.FontColor = xFF222222
+    end
+  end
+  object TabControl1: TTabControl
+    Position.X = 8
+    Position.Y = 136
+    Width = 374
+    Height = 540
+    TabPosition = Top
+    OnChange = TabControl1Change
+    object TabNabavke: TTabItem
+      Text = 'Nabavke'
+      Width = 91
+      object lblOdDatuma: TLabel
+        Position.X = 8
+        Position.Y = 8
+        Width = 70
+        Height = 16
+        Text = 'Od datuma'
+        TextSettings.Font.Size = 9
+        TextSettings.FontColor = xFF888888
+      end
+      object DateOd: TDateEdit
+        Position.X = 8
+        Position.Y = 26
+        Width = 160
+        Height = 30
+      end
+      object lblDoDatuma: TLabel
+        Position.X = 180
+        Position.Y = 8
+        Width = 70
+        Height = 16
+        Text = 'Do datuma'
+        TextSettings.Font.Size = 9
+        TextSettings.FontColor = xFF888888
+      end
+      object DateDo: TDateEdit
+        Position.X = 180
+        Position.Y = 26
+        Width = 130
+        Height = 30
+      end
+      object btnFiltriraj: TButton
+        Position.X = 8
+        Position.Y = 62
+        Width = 350
+        Height = 32
+        Text = 'Filtriraj'
+        OnClick = btnFiltrirajClick
+      end
+      object GridNabavke: TStringGrid
+        Position.X = 8
+        Position.Y = 100
+        Width = 350
+        Height = 380
+        object ColNBroj: TStringColumn
+          Header = 'Broj'
+          Width = 60
+        end
+        object ColNDobavljac: TStringColumn
+          Header = 'Dobavljac'
+          Width = 80
+        end
+        object ColNArtikl: TStringColumn
+          Header = 'Artikal'
+          Width = 80
+        end
+        object ColNKolicina: TStringColumn
+          Header = 'Kol.'
+          Width = 40
+        end
+        object ColNVrednost: TStringColumn
+          Header = 'Vrednost'
+          Width = 70
+        end
+        object ColNDatum: TStringColumn
+          Header = 'Datum'
+          Width = 70
+        end
+        object ColNStatus: TStringColumn
+          Header = 'Status'
+          Width = 70
+        end
+      end
+    end
+    object TabIzdavanja: TTabItem
+      Text = 'Izdavanja'
+      Width = 91
+      object GridIzdavanja: TStringGrid
+        Position.X = 8
+        Position.Y = 8
+        Width = 350
+        Height = 470
+        object ColIBroj: TStringColumn
+          Header = 'Broj'
+          Width = 60
+        end
+        object ColIVozilo: TStringColumn
+          Header = 'Vozilo'
+          Width = 80
+        end
+        object ColIArtikl: TStringColumn
+          Header = 'Artikal'
+          Width = 80
+        end
+        object ColIKolicina: TStringColumn
+          Header = 'Kol.'
+          Width = 40
+        end
+        object ColIDatum: TStringColumn
+          Header = 'Datum'
+          Width = 70
+        end
+        object ColIStatus: TStringColumn
+          Header = 'Status'
+          Width = 70
+        end
+      end
+    end
+    object TabKriticne: TTabItem
+      Text = 'Kriticne'
+      Width = 91
+      object GridKriticne: TStringGrid
+        Position.X = 8
+        Position.Y = 8
+        Width = 350
+        Height = 470
+        object ColKNaziv: TStringColumn
+          Header = 'Naziv'
+          Width = 100
+        end
+        object ColKKategorija: TStringColumn
+          Header = 'Kategorija'
+          Width = 80
+        end
+        object ColKStanje: TStringColumn
+          Header = 'Na stanju'
+          Width = 60
+        end
+        object ColKMinimum: TStringColumn
+          Header = 'Min.'
+          Width = 50
+        end
+        object ColKRazlika: TStringColumn
+          Header = 'Nedostaje'
+          Width = 60
+        end
+      end
+    end
+  end
+  object ADOConnection1: TADOConnection
+    LoginPrompt = False
+    Left = 340
+    Top = 16
+  end
+  object ADOQuery1: TADOQuery
+    Connection = ADOConnection1
+    Left = 340
+    Top = 56
+  end
+end

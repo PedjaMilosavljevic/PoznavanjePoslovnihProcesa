@@ -41,11 +41,13 @@ type
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnArtikliClick(Sender: TObject);
     procedure btnNabavkeClick(Sender: TObject);
     procedure btnIzdavanjaClick(Sender: TObject);
     procedure btnNovaNabavkaClick(Sender: TObject);
+    procedure btnIzvestajiClick(Sender: TObject);
   private
     procedure PoveziBazu;
     procedure UcitajMetrike;
@@ -53,23 +55,44 @@ type
 
 var
   FormZalihe: TFormZalihe;
+  PrethodnaFormaZalihe: string = 'FormZalihe';  // pamti odakle se doslo
 
 implementation
 
 {$R *.fmx}
 
 procedure TFormZalihe.PoveziBazu;
+var
+  dbPath: string;
 begin
-  ADOConnection1.ConnectionString :=
-    'Provider=Microsoft.Jet.OLEDB.4.0;' +
-    'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
-  ADOConnection1.LoginPrompt := False;
-  ADOConnection1.Connected := True;
+  dbPath := ExtractFilePath(ParamStr(0)) + '..\..\..\Baza podataka\mpmtransport.mdb';
+
+  if not FileExists(dbPath) then
+  begin
+    ShowMessage('Baza ne postoji na lokaciji: ' + dbPath);
+    Exit;
+  end;
+
+  try
+    ADOConnection1.ConnectionString :=
+      'Provider=Microsoft.Jet.OLEDB.4.0;' +
+      'Data Source=' + dbPath + ';';
+    ADOConnection1.LoginPrompt := False;
+    ADOConnection1.Connected := True;
+  except
+    on E: Exception do
+      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
+  end;
 end;
 
 procedure TFormZalihe.FormCreate(Sender: TObject);
 begin
   PoveziBazu;
+  UcitajMetrike;
+end;
+
+procedure TFormZalihe.FormShow(Sender: TObject);
+begin
   UcitajMetrike;
 end;
 
@@ -123,33 +146,57 @@ procedure TFormZalihe.btnArtikliClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormZalihe';
   F := TForm(Application.FindComponent('FormPregledZaliha'));
   if Assigned(F) then F.Show;
+  Hide;
 end;
 
 procedure TFormZalihe.btnNabavkeClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormZalihe';
   F := TForm(Application.FindComponent('FormNarudzbenice'));
   if Assigned(F) then F.Show;
+  Hide;
 end;
 
 procedure TFormZalihe.btnIzdavanjaClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormZalihe';
   F := TForm(Application.FindComponent('FormNaloziIzdavanje'));
   if Assigned(F) then F.Show;
+  Hide;
 end;
 
 procedure TFormZalihe.btnNovaNabavkaClick(Sender: TObject);
 var
   F: TForm;
 begin
+  PrethodnaFormaZalihe := 'FormZalihe';
   F := TForm(Application.FindComponent('FormNovaNabavka'));
-  if Assigned(F) then F.ShowModal;
-  UcitajMetrike;
+  if Assigned(F) then
+  begin
+    F.Show;
+    Hide;
+  end;
+end;
+
+procedure TFormZalihe.btnIzvestajiClick(Sender: TObject);
+var
+  F: TForm;
+begin
+  F := TForm(Application.FindComponent('FormIzvestaji'));
+  if Assigned(F) then
+  begin
+    F.Show;
+    Hide;
+  end
+  else
+    ShowMessage('Forma za izvestaje nije ucitana u projekat.');
 end;
 
 end.

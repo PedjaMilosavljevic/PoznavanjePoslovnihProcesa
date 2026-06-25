@@ -29,12 +29,13 @@ type
     ADOConnection1: TADOConnection;
     ComboKorisnici: TComboBox;
     DugmeIzaberiKorisnika: TButton;
-    ImageControl1: TImageControl;
+    Image1: TImage;
     procedure SpeedButton1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure DugmeIzaberiKorisnikaClick(Sender: TObject);
 
-    procedure ImageControl1Click(Sender: TObject);
+    
+    procedure Image1Click(Sender: TObject);
 
   private
  procedure PopuniComboKorisnike;
@@ -85,7 +86,9 @@ end;
 
 
 
-procedure TForm3.ImageControl1Click(Sender: TObject);
+
+
+procedure TForm3.Image1Click(Sender: TObject);
 begin
     FormZalihe.Show;
     Hide;
