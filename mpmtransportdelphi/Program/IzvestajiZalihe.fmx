@@ -49,7 +49,7 @@ object FormIzvestaji: TFormIzvestaji
       Position.Y = 6
       Width = 358
       Height = 18
-      Text = 'Ukupno nabavljeno: —'
+      Text = 'Ukupno nabavljeno: -'
       TextSettings.Font.Size = 10
       TextSettings.FontColor = xFF1D9E75
     end
@@ -58,7 +58,7 @@ object FormIzvestaji: TFormIzvestaji
       Position.Y = 26
       Width = 358
       Height = 18
-      Text = 'Ukupno izdato: —'
+      Text = 'Ukupno izdato: -'
       TextSettings.Font.Size = 10
       TextSettings.FontColor = xFF555555
     end
@@ -67,7 +67,7 @@ object FormIzvestaji: TFormIzvestaji
       Position.Y = 46
       Width = 358
       Height = 18
-      Text = 'Vrednost zaliha: —'
+      Text = 'Vrednost zaliha: -'
       TextSettings.Font.Size = 10
       TextSettings.Font.Style = [fsBold]
       TextSettings.FontColor = xFF222222

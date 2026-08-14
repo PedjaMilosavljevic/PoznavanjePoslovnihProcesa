@@ -1,4 +1,4 @@
-﻿unit NaloziIzdavanje;
+unit NaloziIzdavanje;
 
 interface
 
@@ -196,10 +196,10 @@ begin
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
     'SELECT ni.id_izdavanja, v.registarski_broj, ni.datum_izdavanja, ' +
-    '       ni.status, z.naziv, ni.kolicina, ni.korisnik ' +
-    'FROM (nalog_izdavanje ni ' +
-    'INNER JOIN Vozila v ON v.ID = ni.id_vozila) ' +
-    'INNER JOIN zalihe z ON z.id_artikla = ni.id_artikla ' +
+    '       ni.status, ni.korisnik, ' +
+    '       (SELECT COUNT(*) FROM stavke_izdavanja s WHERE s.id_izdavanja = ni.id_izdavanja) AS br_stavki ' +
+    'FROM nalog_izdavanje ni ' +
+    'INNER JOIN Vozila v ON v.ID = ni.id_vozila ' +
     'ORDER BY ni.datum_izdavanja DESC';
   ADOQuery1.Open;
 
@@ -210,8 +210,7 @@ begin
       ADOQuery1.FieldByName('registarski_broj').AsString,
       FormatDateTime('dd.mm.yyyy', ADOQuery1.FieldByName('datum_izdavanja').AsDateTime),
       ADOQuery1.FieldByName('korisnik').AsString,
-      ADOQuery1.FieldByName('naziv').AsString + ' x ' +
-        ADOQuery1.FieldByName('kolicina').AsString,
+      ADOQuery1.FieldByName('br_stavki').AsString + ' artikala',
       ADOQuery1.FieldByName('status').AsString
     );
     ADOQuery1.Next;

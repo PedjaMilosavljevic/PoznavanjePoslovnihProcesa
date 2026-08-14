@@ -127,7 +127,7 @@ begin
   ColKStanje.Header     := 'Na stanju';
   ColKMinimum.Header    := 'Minimum';
   ColKRazlika.Header    := 'Nedostaje';
-  // Default datumi — poslednji mesec
+  // Default datumi - poslednji mesec
   DateOd.Date := IncMonth(Now, -1);
   DateDo.Date := Now;
 
@@ -265,8 +265,8 @@ begin
     lblUkupnoIzdato.Text := 'Ukupno izdato: ' +
       ADOQuery1.FieldByName('uk').AsString + ' kom.';
 
-  // Vrednost zaliha — koristi PROSECNU cenu po artiklu da se izbegne
-  // dupliranje vrednosti kada je artikal naruчivan vise puta
+  // Vrednost zaliha - koristi PROSECNU cenu po artiklu da se izbegne
+  // dupliranje vrednosti kada je artikal narucivan vise puta
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
     'SELECT SUM(z.kolicina_na_stanju * p.avg_cena) AS vr ' +
