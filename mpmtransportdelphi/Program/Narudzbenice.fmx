@@ -147,4 +147,9 @@ object FormNarudzbenice: TFormNarudzbenice
     Left = 350
     Top = 50
   end
+  object ADOQuery2: TADOQuery
+    Connection = ADOConnection1
+    Left = 350
+    Top = 90
+  end
 end

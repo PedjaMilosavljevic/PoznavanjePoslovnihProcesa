@@ -28,6 +28,7 @@ type
     btnNoviNalog: TButton;
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
+    ADOQuery2: TADOQuery;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -189,7 +190,7 @@ begin
   lblS.TextSettings.HorzAlign := TTextAlign.Center;
   lblS.TextSettings.VertAlign := TTextAlign.Center;
 
-  // ── Dugme "Potvrdi prijem" - vidljivo samo za naloge 'U obradi' ──
+  // -- Dugme "Potvrdi prijem" - vidljivo samo za naloge 'U obradi' --
   btnPotvrdi := TButton.Create(Layout);
   btnPotvrdi.Parent := Layout;
   btnPotvrdi.Position.X := 10;
@@ -210,16 +211,16 @@ end;
 
 procedure TFormNarudzbenice.PotvrdiPrijemClick(Sender: TObject);
 var
-  IDNaloga, IDArtikla, Kolicina: Integer;
+  IDNaloga, IDArtikla, Kolicina, BrojAzuriranih: Integer;
   TrenutniStatus: string;
+  ImaStavki: Boolean;
 begin
   IDNaloga := TButton(Sender).Tag;
 
-  // Provjeri trenutni status i ucitaj podatke o nalogu
+  // Provjeri status naloga
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
-    'SELECT id_artikla, kolicina, status FROM nalog_nabavka WHERE id_naloga = ' +
-    IntToStr(IDNaloga);
+    'SELECT status FROM nalog_nabavka WHERE id_naloga = ' + IntToStr(IDNaloga);
   ADOQuery1.Open;
 
   if ADOQuery1.Eof then
@@ -235,33 +236,90 @@ begin
     Exit;
   end;
 
-  IDArtikla := ADOQuery1.FieldByName('id_artikla').AsInteger;
-  Kolicina  := ADOQuery1.FieldByName('kolicina').AsInteger;
+  // Provjeri da li nalog ima stavke u stavke_nabavke (novi tip naloga)
+  ADOQuery1.Close;
+  ADOQuery1.SQL.Text :=
+    'SELECT id_artikla, kolicina FROM stavke_nabavke WHERE id_naloga = ' +
+    IntToStr(IDNaloga);
+  ADOQuery1.Open;
+  ImaStavki := not ADOQuery1.Eof;
 
   try
-    // 1. Azuriraj status naloga na 'Primljeno'
+  
+    if ImaStavki then
+    begin
+      // Novi tip naloga: azuriraj sve artikle iz stavke_nabavke
+      while not ADOQuery1.Eof do
+      begin
+        IDArtikla := ADOQuery1.FieldByName('id_artikla').AsInteger;
+        Kolicina  := ADOQuery1.FieldByName('kolicina').AsInteger;
+
+        ADOQuery1.DisableControls;
+        // Sacuvaj poziciju - koristimo drugi query za UPDATE
+        ADOQuery1.BookmarkValid(ADOQuery1.Bookmark);
+
+              ADOQuery1.Next;
+      end;
+
+      // Sad azuriraj - koristimo ADOQuery1 ponovo
+      ADOQuery1.Close;
+      ADOQuery1.SQL.Text :=
+        'SELECT id_artikla, kolicina FROM stavke_nabavke WHERE id_naloga = ' +
+        IntToStr(IDNaloga);
+      ADOQuery1.Open;
+
+      while not ADOQuery1.Eof do
+      begin
+        IDArtikla := ADOQuery1.FieldByName('id_artikla').AsInteger;
+        Kolicina  := ADOQuery1.FieldByName('kolicina').AsInteger;
+        ADOQuery1.Next;
+
+        ADOQuery2.Close;
+        ADOQuery2.SQL.Text :=
+          'UPDATE zalihe SET kolicina_na_stanju = kolicina_na_stanju + ' +
+          IntToStr(Kolicina) + ' WHERE id_artikla = ' + IntToStr(IDArtikla);
+        ADOQuery2.ExecSQL;
+      end;
+    end
+    else
+    begin
+      // Stari tip naloga: jedan artikal u nalog_nabavka
+      ADOQuery1.Close;
+      ADOQuery1.SQL.Text :=
+        'SELECT id_artikla, kolicina FROM nalog_nabavka WHERE id_naloga = ' +
+        IntToStr(IDNaloga);
+      ADOQuery1.Open;
+
+      if not ADOQuery1.Eof then
+      begin
+        IDArtikla := ADOQuery1.FieldByName('id_artikla').AsInteger;
+        Kolicina  := ADOQuery1.FieldByName('kolicina').AsInteger;
+  
+        ADOQuery2.Close;
+        ADOQuery2.SQL.Text :=
+          'UPDATE zalihe SET kolicina_na_stanju = kolicina_na_stanju + ' +
+          IntToStr(Kolicina) + ' WHERE id_artikla = ' + IntToStr(IDArtikla);
+        ADOQuery2.ExecSQL;
+      end;
+    end;
+
+    // Azuriraj status naloga
     ADOQuery1.Close;
     ADOQuery1.SQL.Text :=
       'UPDATE nalog_nabavka SET status = ''Primljeno'' WHERE id_naloga = ' +
       IntToStr(IDNaloga);
     ADOQuery1.ExecSQL;
 
-    // 2. Povecaj kolicinu na stanju za odgovarajuci artikal
-    ADOQuery1.Close;
-    ADOQuery1.SQL.Text :=
-      'UPDATE zalihe SET kolicina_na_stanju = kolicina_na_stanju + ' +
-      IntToStr(Kolicina) + ' WHERE id_artikla = ' + IntToStr(IDArtikla);
-    ADOQuery1.ExecSQL;
-
     ShowMessage('Prijem robe je potvrdjen!' + sLineBreak +
-      'Zaliha je azurirana (+' + IntToStr(Kolicina) + ' kom.)');
+      'Zalihe su azurirane.');
 
-    UcitajNabavke;  // refresuj listu
+    UcitajNabavke;
   except
     on E: Exception do
       ShowMessage('Greska pri potvrdi prijema: ' + E.Message);
   end;
 end;
+
 
 procedure TFormNarudzbenice.UcitajNabavke;
 begin
@@ -269,7 +327,8 @@ begin
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
     'SELECT nn.id_naloga, d.naziv_firme, nn.datum_naloga, ' +
-    '       nn.ukupna_vrednost, nn.status, nn.kolicina ' +
+    '       nn.ukupna_vrednost, nn.status, ' +
+    '       (SELECT COUNT(*) FROM stavke_nabavke s WHERE s.id_naloga = nn.id_naloga) AS br_stavki ' +
     'FROM nalog_nabavka nn ' +
     'INNER JOIN dobavljaci d ON d.id_dobavljaca = nn.id_dobavljaca ' +
     'ORDER BY nn.datum_naloga DESC';
@@ -281,7 +340,7 @@ begin
       '#NOV-' + ADOQuery1.FieldByName('id_naloga').AsString,
       ADOQuery1.FieldByName('naziv_firme').AsString,
       FormatDateTime('dd.mm.yyyy', ADOQuery1.FieldByName('datum_naloga').AsDateTime),
-      ADOQuery1.FieldByName('kolicina').AsString + ' stavki',
+      ADOQuery1.FieldByName('br_stavki').AsString + ' artikala',
       FormatFloat('#,##0', ADOQuery1.FieldByName('ukupna_vrednost').AsFloat) + ' RSD',
       ADOQuery1.FieldByName('status').AsString,
       ADOQuery1.FieldByName('id_naloga').AsInteger

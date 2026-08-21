@@ -1,4 +1,4 @@
-﻿unit UnosPodataka;
+unit UnosPodataka;
 
 interface
 
@@ -67,7 +67,7 @@ begin
   except
     on E: Exception do
     begin
-      ShowMessage('Greška pri konekciji sa bazom: ' + E.Message);
+      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
       Exit;
     end;
   end;
@@ -115,7 +115,7 @@ begin
 end
   else
   begin
-    ShowMessage('Pogrešno korisničko ime ili šifra!');
+    ShowMessage('Pogresno korisnicko ime ili sifra!');
     txtbKorisnickoIme.Text := '';
     txtbSifra.Text := '';
 

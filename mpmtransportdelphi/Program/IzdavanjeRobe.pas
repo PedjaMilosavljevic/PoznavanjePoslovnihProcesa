@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   FMX.Controls.Presentation, FMX.StdCtrls, FMX.Objects, FMX.Edit,
   FMX.ListBox, FMX.Layouts,
-  Data.DB, Data.Win.ADODB, UnosPodataka;
+  Data.DB, Data.Win.ADODB, UnosPodataka, Zalihe;
 
 type
   TFormIzdavanjeRobe = class(TForm)
@@ -17,7 +17,11 @@ type
     RectBody: TRectangle;
     lblVozilo: TLabel;
     ComboVozilo: TComboBox;
+    lblKorisnik: TLabel;
+    txtKorisnik: TEdit;
     lblVozacIme: TLabel;
+    Line1: TLine;
+    lblDodajArtikl: TLabel;
     lblArtikl: TLabel;
     ComboArtikl: TComboBox;
     PanelInfo: TPanel;
@@ -25,10 +29,11 @@ type
     lblLokacija: TLabel;
     lblKolicina: TLabel;
     txtKolicina: TEdit;
-    lblKorisnik: TLabel;
-    txtKorisnik: TEdit;
-    lblNapomena: TLabel;
-    txtNapomena: TEdit;
+    btnDodajStavku: TButton;
+    Line2: TLine;
+    lblStavkeNaslov: TLabel;
+    btnObrisiStavku: TButton;
+    ListBoxStavke: TListBox;
     btnIzdaj: TButton;
     btnOtkazi: TButton;
     ADOConnection1: TADOConnection;
@@ -41,14 +46,23 @@ type
     procedure btnOtkaziClick(Sender: TObject);
     procedure ComboVoziloChange(Sender: TObject);
     procedure ComboArtiklChange(Sender: TObject);
+    procedure btnDodajStavkuClick(Sender: TObject);
+    procedure btnObrisiStavkuClick(Sender: TObject);
   private
+    StavkiArtiklaID : array[0..99] of Integer;
+    StavkiKolicina   : array[0..99] of Integer;
+    BrojStavki       : Integer;
+
     procedure PoveziBazu;
     procedure PopuniVozila;
     procedure PopuniArtikle;
-    procedure PrikaziVozacaZaVozilo;
+    procedure PrikaziInfoVozila;
     procedure PrikaziInfoArtikla;
-    function ValidacijaUnosa: Boolean;
+    procedure AzurirajListu;
+    procedure OcistiFormu;
     procedure VratiSeNaPrethodnu;
+    function  DostupnaKolicina(IDArtikla: Integer): Integer;
+    function  ValidacijaUnosa: Boolean;
   end;
 
 var
@@ -58,20 +72,16 @@ implementation
 
 {$R *.fmx}
 
-uses Zalihe;
-
 procedure TFormIzdavanjeRobe.PoveziBazu;
 var
   dbPath: string;
 begin
   dbPath := ExtractFilePath(ParamStr(0)) + '..\..\..\Baza podataka\mpmtransport.mdb';
-
   if not FileExists(dbPath) then
   begin
     ShowMessage('Baza ne postoji na lokaciji: ' + dbPath);
     Exit;
   end;
-
   try
     ADOConnection1.ConnectionString :=
       'Provider=Microsoft.Jet.OLEDB.4.0;' +
@@ -80,7 +90,7 @@ begin
     ADOConnection1.Connected := True;
   except
     on E: Exception do
-      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
+      ShowMessage('Greska pri konekciji: ' + E.Message);
   end;
 end;
 
@@ -89,8 +99,10 @@ begin
   PoveziBazu;
   PopuniVozila;
   PopuniArtikle;
-  lblVozacIme.Text := 'Vozac: -';
+  lblVozacIme.Text := 'Vozilo: -';
   PanelInfo.Visible := False;
+  BrojStavki := 0;
+  AzurirajListu;
 end;
 
 procedure TFormIzdavanjeRobe.PopuniVozila;
@@ -130,7 +142,7 @@ end;
 
 procedure TFormIzdavanjeRobe.ComboVoziloChange(Sender: TObject);
 begin
-  PrikaziVozacaZaVozilo;
+  PrikaziInfoVozila;
 end;
 
 procedure TFormIzdavanjeRobe.ComboArtiklChange(Sender: TObject);
@@ -138,13 +150,13 @@ begin
   PrikaziInfoArtikla;
 end;
 
-procedure TFormIzdavanjeRobe.PrikaziVozacaZaVozilo;
+procedure TFormIzdavanjeRobe.PrikaziInfoVozila;
 var
   IDVozila: Integer;
 begin
   if ComboVozilo.ItemIndex = -1 then
   begin
-    lblVozacIme.Text := 'Vozac: -';
+    lblVozacIme.Text := 'Vozilo: -';
     Exit;
   end;
   IDVozila := Integer(ComboVozilo.Items.Objects[ComboVozilo.ItemIndex]);
@@ -153,9 +165,8 @@ begin
     'SELECT registarski_broj FROM Vozila WHERE ID = ' + IntToStr(IDVozila);
   ADOQuery2.Open;
   if not ADOQuery2.Eof then
-    lblVozacIme.Text := 'Vozilo: ' + ADOQuery2.FieldByName('registarski_broj').AsString
-  else
-    lblVozacIme.Text := 'Vozac: -';
+    lblVozacIme.Text := 'Izabrano vozilo: ' +
+      ADOQuery2.FieldByName('registarski_broj').AsString;
 end;
 
 procedure TFormIzdavanjeRobe.PrikaziInfoArtikla;
@@ -183,24 +194,27 @@ begin
   end;
 end;
 
-function TFormIzdavanjeRobe.ValidacijaUnosa: Boolean;
-var
-  Kolicina, KolicinaNaStanju, IDArtikla: Integer;
+function TFormIzdavanjeRobe.DostupnaKolicina(IDArtikla: Integer): Integer;
 begin
-  Result := False;
-  if ComboVozilo.ItemIndex = -1 then
-  begin
-    ShowMessage('Molimo izaberite vozilo.');
-    Exit;
-  end;
+  ADOQuery3.Close;
+  ADOQuery3.SQL.Text :=
+    'SELECT kolicina_na_stanju FROM zalihe WHERE id_artikla = ' +
+    IntToStr(IDArtikla);
+  ADOQuery3.Open;
+  if not ADOQuery3.Eof then
+    Result := ADOQuery3.FieldByName('kolicina_na_stanju').AsInteger
+  else
+    Result := 0;
+end;
+
+procedure TFormIzdavanjeRobe.btnDodajStavkuClick(Sender: TObject);
+var
+  IDArtikla, Kolicina, Dostupno, VecUKosarici: Integer;
+  i: Integer;
+begin
   if ComboArtikl.ItemIndex = -1 then
   begin
     ShowMessage('Molimo izaberite artikal.');
-    Exit;
-  end;
-  if Trim(txtKorisnik.Text) = '' then
-  begin
-    ShowMessage('Molimo unesite ime i prezime korisnika koji preuzima robu.');
     Exit;
   end;
   if Trim(txtKolicina.Text) = '' then
@@ -213,29 +227,105 @@ begin
     ShowMessage('Kolicina mora biti pozitivan ceo broj.');
     Exit;
   end;
+
   IDArtikla := Integer(ComboArtikl.Items.Objects[ComboArtikl.ItemIndex]);
 
-  if not ADOConnection1.Connected then
-    PoveziBazu;
+  // Izbroji koliko je vec u kosarici za ovaj artikal
+  VecUKosarici := 0;
+  for i := 0 to BrojStavki - 1 do
+    if StavkiArtiklaID[i] = IDArtikla then
+      Inc(VecUKosarici, StavkiKolicina[i]);
 
-  try
-    ADOQuery3.Close;
-    ADOQuery3.SQL.Text :=
-      'SELECT kolicina_na_stanju FROM zalihe WHERE id_artikla = ' + IntToStr(IDArtikla);
-    ADOQuery3.Open;
-    KolicinaNaStanju := ADOQuery3.FieldByName('kolicina_na_stanju').AsInteger;
-  except
-    on E: Exception do
-    begin
-      ShowMessage('Greska pri provjeri stanja: ' + E.Message);
-      Exit;
-    end;
-  end;
-  if Kolicina > KolicinaNaStanju then
+  Dostupno := DostupnaKolicina(IDArtikla);
+
+  if VecUKosarici + Kolicina > Dostupno then
   begin
     ShowMessage('Nema dovoljno na stanju!' + sLineBreak +
-      'Trazeno: ' + IntToStr(Kolicina) + sLineBreak +
-      'Dostupno: ' + IntToStr(KolicinaNaStanju));
+      'Trazeno ukupno: ' + IntToStr(VecUKosarici + Kolicina) + sLineBreak +
+      'Dostupno: ' + IntToStr(Dostupno));
+    Exit;
+  end;
+
+  if BrojStavki >= 100 then
+  begin
+    ShowMessage('Dostignut maksimalan broj stavki.');
+    Exit;
+  end;
+
+  StavkiArtiklaID[BrojStavki] := IDArtikla;
+  StavkiKolicina[BrojStavki]  := Kolicina;
+  Inc(BrojStavki);
+
+  ComboArtikl.ItemIndex := -1;
+  txtKolicina.Text := '';
+  PanelInfo.Visible := False;
+
+  AzurirajListu;
+end;
+
+procedure TFormIzdavanjeRobe.AzurirajListu;
+var
+  i: Integer;
+  NazivArtikla: string;
+  Item: TListBoxItem;
+begin
+  ListBoxStavke.Clear;
+  for i := 0 to BrojStavki - 1 do
+  begin
+    ADOQuery3.Close;
+    ADOQuery3.SQL.Text :=
+      'SELECT naziv FROM zalihe WHERE id_artikla = ' +
+      IntToStr(StavkiArtiklaID[i]);
+    ADOQuery3.Open;
+    if not ADOQuery3.Eof then
+      NazivArtikla := ADOQuery3.FieldByName('naziv').AsString
+    else
+      NazivArtikla := '#' + IntToStr(StavkiArtiklaID[i]);
+
+    Item := TListBoxItem.Create(ListBoxStavke);
+    Item.Height := 36;
+    Item.Text := IntToStr(i+1) + '. ' + NazivArtikla +
+      ' - ' + IntToStr(StavkiKolicina[i]) + ' kom.';
+    Item.Parent := ListBoxStavke;
+  end;
+  lblStavkeNaslov.Text := 'Stavke za izdavanje (' + IntToStr(BrojStavki) + ')';
+end;
+
+procedure TFormIzdavanjeRobe.btnObrisiStavkuClick(Sender: TObject);
+var
+  Idx, i: Integer;
+begin
+  if ListBoxStavke.ItemIndex = -1 then
+  begin
+    ShowMessage('Izaberite stavku za brisanje.');
+    Exit;
+  end;
+  Idx := ListBoxStavke.ItemIndex;
+  for i := Idx to BrojStavki - 2 do
+  begin
+    StavkiArtiklaID[i] := StavkiArtiklaID[i+1];
+    StavkiKolicina[i]  := StavkiKolicina[i+1];
+  end;
+  Dec(BrojStavki);
+  AzurirajListu;
+end;
+
+function TFormIzdavanjeRobe.ValidacijaUnosa: Boolean;
+begin
+  Result := False;
+  if ComboVozilo.ItemIndex = -1 then
+  begin
+    ShowMessage('Molimo izaberite vozilo.');
+    Exit;
+  end;
+  if Trim(txtKorisnik.Text) = '' then
+  begin
+    ShowMessage('Molimo unesite ime korisnika koji preuzima robu.');
+    Exit;
+  end;
+  if BrojStavki = 0 then
+  begin
+    ShowMessage('Dodajte bar jedan artikal za izdavanje.');
     Exit;
   end;
   Result := True;
@@ -243,45 +333,76 @@ end;
 
 procedure TFormIzdavanjeRobe.btnIzdajClick(Sender: TObject);
 var
-  IDVozila, IDArtikla, Kolicina: Integer;
+  IDVozila, IDIzdavanja, i: Integer;
 begin
   if not ValidacijaUnosa then
     Exit;
-  IDVozila  := Integer(ComboVozilo.Items.Objects[ComboVozilo.ItemIndex]);
-  IDArtikla := Integer(ComboArtikl.Items.Objects[ComboArtikl.ItemIndex]);
-  Kolicina  := StrToInt(txtKolicina.Text);
 
-  if not ADOConnection1.Connected then
-    PoveziBazu;
+  IDVozila := Integer(ComboVozilo.Items.Objects[ComboVozilo.ItemIndex]);
+
+  if not ADOConnection1.Connected then PoveziBazu;
 
   try
+    // Korak 1: INSERT header u nalog_izdavanje
     ADOQuery1.Close;
     ADOQuery1.SQL.Text :=
       'INSERT INTO nalog_izdavanje ' +
-      '(id_vozila, id_artikla, kolicina, datum_izdavanja, status, napomena, korisnik) ' +
+      '(id_vozila, datum_izdavanja, status, napomena, korisnik) ' +
       'VALUES (' +
-      IntToStr(IDVozila) + ', ' +
-      IntToStr(IDArtikla) + ', ' +
-      IntToStr(Kolicina) + ', ' +
-      'Now(), ' +
-      '''Izdato'', ' +
-      '''' + Trim(txtNapomena.Text) + ''', ' +
+      IntToStr(IDVozila) + ', Now(), ''Izdato'', '''', ' +
       '''' + Trim(txtKorisnik.Text) + ''')';
     ADOQuery1.ExecSQL;
 
-    ADOQuery2.Close;
-    ADOQuery2.SQL.Text :=
-      'UPDATE zalihe SET kolicina_na_stanju = kolicina_na_stanju - ' +
-      IntToStr(Kolicina) +
-      ' WHERE id_artikla = ' + IntToStr(IDArtikla);
-    ADOQuery2.ExecSQL;
+    // Korak 2: Dohvati ID kreiranog izdavanja
+    ADOQuery1.Close;
+    ADOQuery1.SQL.Text := 'SELECT @@IDENTITY AS id';
+    ADOQuery1.Open;
+    IDIzdavanja := ADOQuery1.FieldByName('id').AsInteger;
 
-    ShowMessage('Roba je uspesno izdata!');
+    // Korak 3: Za svaku stavku - INSERT u stavke_izdavanja + UPDATE zalihe
+    for i := 0 to BrojStavki - 1 do
+    begin
+      // INSERT stavka
+      ADOQuery2.Close;
+      ADOQuery2.SQL.Text :=
+        'INSERT INTO stavke_izdavanja (id_izdavanja, id_artikla, kolicina) ' +
+        'VALUES (' +
+        IntToStr(IDIzdavanja) + ', ' +
+        IntToStr(StavkiArtiklaID[i]) + ', ' +
+        IntToStr(StavkiKolicina[i]) + ')';
+      ADOQuery2.ExecSQL;
+
+      // UPDATE zalihe - smanji kolicinu
+      ADOQuery2.Close;
+      ADOQuery2.SQL.Text :=
+        'UPDATE zalihe SET kolicina_na_stanju = kolicina_na_stanju - ' +
+        IntToStr(StavkiKolicina[i]) +
+        ' WHERE id_artikla = ' + IntToStr(StavkiArtiklaID[i]);
+      ADOQuery2.ExecSQL;
+    end;
+
+    ShowMessage('Roba je uspesno izdata!' + sLineBreak +
+      'Broj artikala: ' + IntToStr(BrojStavki));
+
+    OcistiFormu;
     VratiSeNaPrethodnu;
+
   except
     on E: Exception do
-      ShowMessage('Greska: ' + E.Message);
+      ShowMessage('Greska pri izdavanju robe: ' + E.Message);
   end;
+end;
+
+procedure TFormIzdavanjeRobe.OcistiFormu;
+begin
+  ComboVozilo.ItemIndex := -1;
+  ComboArtikl.ItemIndex := -1;
+  txtKolicina.Text := '';
+  txtKorisnik.Text := '';
+  PanelInfo.Visible := False;
+  lblVozacIme.Text := 'Vozilo: -';
+  BrojStavki := 0;
+  AzurirajListu;
 end;
 
 procedure TFormIzdavanjeRobe.VratiSeNaPrethodnu;
@@ -303,11 +424,13 @@ end;
 
 procedure TFormIzdavanjeRobe.btnOtkaziClick(Sender: TObject);
 begin
+  OcistiFormu;
   VratiSeNaPrethodnu;
 end;
 
 procedure TFormIzdavanjeRobe.SpeedButton1Click(Sender: TObject);
 begin
+  OcistiFormu;
   VratiSeNaPrethodnu;
 end;
 

@@ -2,7 +2,7 @@ object FormIzdavanjeRobe: TFormIzdavanjeRobe
   Left = 0
   Top = 0
   Caption = 'Izdavanje Robe'
-  ClientHeight = 660
+  ClientHeight = 680
   ClientWidth = 390
   Fill.Kind = Solid
   Fill.Color = xFFFFFFFF
@@ -42,13 +42,13 @@ object FormIzdavanjeRobe: TFormIzdavanjeRobe
     Position.X = 0
     Position.Y = 55
     Width = 390
-    Height = 600
+    Height = 625
     Fill.Color = xFFFFFFFF
     Stroke.Kind = None
     object lblVozilo: TLabel
       Position.X = 16
-      Position.Y = 16
-      Width = 358
+      Position.Y = 10
+      Width = 170
       Height = 18
       Text = 'Vozilo'
       TextSettings.Font.Size = 11
@@ -56,113 +56,154 @@ object FormIzdavanjeRobe: TFormIzdavanjeRobe
     end
     object ComboVozilo: TComboBox
       Position.X = 16
-      Position.Y = 38
-      Width = 358
+      Position.Y = 30
+      Width = 170
       Height = 32
       OnChange = ComboVoziloChange
     end
-    object lblVozacIme: TLabel
-      Position.X = 16
-      Position.Y = 76
-      Width = 358
-      Height = 18
-      Text = 'Vozilo: —'
-      TextSettings.Font.Size = 10
-      TextSettings.FontColor = xFF888888
-    end
     object lblKorisnik: TLabel
-      Position.X = 16
-      Position.Y = 100
-      Width = 358
+      Position.X = 200
+      Position.Y = 10
+      Width = 174
       Height = 18
       Text = 'Korisnik (ime i prezime)'
       TextSettings.Font.Size = 11
       TextSettings.FontColor = xFF555555
     end
     object txtKorisnik: TEdit
-      Position.X = 16
-      Position.Y = 122
-      Width = 358
+      Position.X = 200
+      Position.Y = 30
+      Width = 174
       Height = 32
       TextPrompt = 'npr. Marko Jovanovic'
     end
+    object lblVozacIme: TLabel
+      Position.X = 16
+      Position.Y = 68
+      Width = 358
+      Height = 18
+      Text = 'Vozilo: -'
+      TextSettings.Font.Size = 10
+      TextSettings.FontColor = xFF888888
+    end
+    object Line1: TLine
+      Position.X = 16
+      Position.Y = 92
+      Width = 358
+      Height = 1
+      Stroke.Color = xFFDDDDDD
+    end
+    object lblDodajArtikl: TLabel
+      Position.X = 16
+      Position.Y = 100
+      Width = 250
+      Height = 18
+      Text = 'Dodaj artikal'
+      TextSettings.Font.Size = 11
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.FontColor = xFF222222
+    end
     object lblArtikl: TLabel
       Position.X = 16
-      Position.Y = 164
+      Position.Y = 124
       Width = 358
       Height = 18
       Text = 'Artikal'
-      TextSettings.Font.Size = 11
+      TextSettings.Font.Size = 10
       TextSettings.FontColor = xFF555555
     end
     object ComboArtikl: TComboBox
       Position.X = 16
-      Position.Y = 186
+      Position.Y = 144
       Width = 358
       Height = 32
       OnChange = ComboArtiklChange
     end
     object PanelInfo: TPanel
       Position.X = 16
-      Position.Y = 224
+      Position.Y = 182
       Width = 358
-      Height = 50
+      Height = 36
       Visible = False
       object lblDostupnoKolicina: TLabel
-        Position.X = 10
-        Position.Y = 8
-        Width = 160
+        Position.X = 8
+        Position.Y = 4
+        Width = 170
         Height = 16
-        Text = 'Dostupno: —'
+        Text = 'Dostupno: -'
         TextSettings.Font.Size = 10
         TextSettings.FontColor = xFF1D9E75
       end
       object lblLokacija: TLabel
-        Position.X = 10
-        Position.Y = 26
-        Width = 200
+        Position.X = 190
+        Position.Y = 4
+        Width = 160
         Height = 16
-        Text = 'Lokacija: —'
+        Text = 'Lokacija: -'
         TextSettings.Font.Size = 10
         TextSettings.FontColor = xFF888888
       end
     end
     object lblKolicina: TLabel
       Position.X = 16
-      Position.Y = 282
-      Width = 358
+      Position.Y = 226
+      Width = 170
       Height = 18
       Text = 'Kolicina'
-      TextSettings.Font.Size = 11
+      TextSettings.Font.Size = 10
       TextSettings.FontColor = xFF555555
     end
     object txtKolicina: TEdit
       Position.X = 16
-      Position.Y = 304
-      Width = 358
+      Position.Y = 246
+      Width = 250
       Height = 32
-      TextPrompt = 'Unesite kolicinu...'
-      KeyboardType = NumberPad
+      TextPrompt = 'kom.'
     end
-    object lblNapomena: TLabel
+    object btnDodajStavku: TButton
+      Position.X = 274
+      Position.Y = 246
+      Width = 100
+      Height = 32
+      Text = '+ Dodaj'
+      OnClick = btnDodajStavkuClick
+    end
+    object Line2: TLine
       Position.X = 16
-      Position.Y = 346
+      Position.Y = 288
       Width = 358
+      Height = 1
+      Stroke.Color = xFFDDDDDD
+    end
+    object lblStavkeNaslov: TLabel
+      Position.X = 16
+      Position.Y = 296
+      Width = 260
       Height = 18
-      Text = 'Napomena (opciono)'
+      Text = 'Stavke za izdavanje (0)'
       TextSettings.Font.Size = 11
-      TextSettings.FontColor = xFF555555
+      TextSettings.Font.Style = [fsBold]
+      TextSettings.FontColor = xFF222222
     end
-    object txtNapomena: TEdit
+    object btnObrisiStavku: TButton
+      Position.X = 300
+      Position.Y = 294
+      Width = 74
+      Height = 22
+      Text = 'Obrisi'
+      OnClick = btnObrisiStavkuClick
+    end
+    object ListBoxStavke: TListBox
       Position.X = 16
-      Position.Y = 368
+      Position.Y = 320
       Width = 358
-      Height = 32
-      TextPrompt = 'Napomena...'
+      Height = 160
+      DefaultItemStyles.ItemStyle = ''
+      ItemHeight = 36
     end
     object btnIzdaj: TButton
       Position.X = 16
-      Position.Y = 430
+      Position.Y = 496
       Width = 358
       Height = 44
       Text = 'Izdaj robu'
@@ -170,7 +211,7 @@ object FormIzdavanjeRobe: TFormIzdavanjeRobe
     end
     object btnOtkazi: TButton
       Position.X = 16
-      Position.Y = 482
+      Position.Y = 548
       Width = 358
       Height = 44
       Text = 'Otkazi'
