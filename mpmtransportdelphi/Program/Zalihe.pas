@@ -57,7 +57,7 @@ var
   FormZalihe: TFormZalihe;
   PrethodnaFormaZalihe: string = 'FormZalihe';  // pamti odakle se doslo
 
-implementation
+implementation   uses Menadzer;
 
 {$R *.fmx}
 
@@ -138,7 +138,7 @@ end;
 
 procedure TFormZalihe.SpeedButton1Click(Sender: TObject);
 begin
-  Form2.Show;
+  Form3.Show;
   Close;
 end;
 

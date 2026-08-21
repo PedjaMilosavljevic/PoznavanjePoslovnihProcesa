@@ -24,7 +24,7 @@ type
     DateOd: TDateEdit;
     lblDoDatuma: TLabel;
     DateDo: TDateEdit;
-    btnFiltrirај: TButton;
+    btnFiltriraj: TButton;
     // Grid nabavke
     GridNabavke: TStringGrid;
     ColNBroj: TStringColumn;
@@ -58,6 +58,7 @@ type
     ADOConnection1: TADOConnection;
     ADOQuery1: TADOQuery;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure btnFiltrirajClick(Sender: TObject);
     procedure TabControl1Change(Sender: TObject);
@@ -79,12 +80,27 @@ implementation
 {$R *.fmx}
 
 procedure TFormIzvestaji.PoveziBazu;
+var
+  dbPath: string;
 begin
-  ADOConnection1.ConnectionString :=
-    'Provider=Microsoft.Jet.OLEDB.4.0;' +
-    'Data Source=' + ExtractFilePath(ParamStr(0)) + 'mpmtransport.mdb;';
-  ADOConnection1.LoginPrompt := False;
-  ADOConnection1.Connected := True;
+  dbPath := ExtractFilePath(ParamStr(0)) + '..\..\..\Baza podataka\mpmtransport.mdb';
+
+  if not FileExists(dbPath) then
+  begin
+    ShowMessage('Baza ne postoji na lokaciji: ' + dbPath);
+    Exit;
+  end;
+
+  try
+    ADOConnection1.ConnectionString :=
+      'Provider=Microsoft.Jet.OLEDB.4.0;' +
+      'Data Source=' + dbPath + ';';
+    ADOConnection1.LoginPrompt := False;
+    ADOConnection1.Connected := True;
+  except
+    on E: Exception do
+      ShowMessage('Greska pri konekciji sa bazom: ' + E.Message);
+  end;
 end;
 
 procedure TFormIzvestaji.FormCreate(Sender: TObject);
@@ -111,10 +127,18 @@ begin
   ColKStanje.Header     := 'Na stanju';
   ColKMinimum.Header    := 'Minimum';
   ColKRazlika.Header    := 'Nedostaje';
-  // Default datumi — poslednji mesec
+  // Default datumi - poslednji mesec
   DateOd.Date := IncMonth(Now, -1);
   DateDo.Date := Now;
 
+  UcitajNabavke;
+  UcitajIzdavanja;
+  UcitajKriticneZalihe;
+  IzracunajSumarno;
+end;
+
+procedure TFormIzvestaji.FormShow(Sender: TObject);
+begin
   UcitajNabavke;
   UcitajIzdavanja;
   UcitajKriticneZalihe;
@@ -129,14 +153,13 @@ begin
   ADOQuery1.SQL.Text :=
     'SELECT nn.id_naloga, d.naziv_firme, z.naziv, nn.kolicina, ' +
     '       nn.ukupna_vrednost, nn.datum_naloga, nn.status ' +
-    'FROM nalog_nabavka nn ' +
-    'INNER JOIN dobavljaci d ON d.id_dobavljaca = nn.id_dobavljaca ' +
+    'FROM (nalog_nabavka nn ' +
+    'INNER JOIN dobavljaci d ON d.id_dobavljaca = nn.id_dobavljaca) ' +
     'INNER JOIN zalihe z     ON z.id_artikla    = nn.id_artikla ' +
-    'WHERE nn.datum_naloga >= :od AND nn.datum_naloga <= :do ' +
+    'WHERE nn.datum_naloga >= #' + FormatDateTime('mm/dd/yyyy', DateOd.Date) + '# ' +
+    'AND nn.datum_naloga <= #' + FormatDateTime('mm/dd/yyyy', DateDo.Date + 1) + '# ' +
     'ORDER BY nn.datum_naloga DESC';
 
-  ADOQuery1.Parameters.ParamByName('od').Value := DateOd.Date;
-  ADOQuery1.Parameters.ParamByName('do').Value := DateDo.Date + 1;
   ADOQuery1.Open;
 
   GridNabavke.RowCount := ADOQuery1.RecordCount;
@@ -165,14 +188,13 @@ begin
   ADOQuery1.SQL.Text :=
     'SELECT ni.id_izdavanja, voz.registarski_broj, z.naziv, ' +
     '       ni.kolicina, ni.datum_izdavanja, ni.status ' +
-    'FROM nalog_izdavanje ni ' +
-    'INNER JOIN vozila  voz ON voz.id_vozila  = ni.id_vozila ' +
+    'FROM (nalog_izdavanje ni ' +
+    'INNER JOIN Vozila  voz ON voz.ID  = ni.id_vozila) ' +
     'INNER JOIN zalihe  z   ON z.id_artikla   = ni.id_artikla ' +
-    'WHERE ni.datum_izdavanja >= :od AND ni.datum_izdavanja <= :do ' +
+    'WHERE ni.datum_izdavanja >= #' + FormatDateTime('mm/dd/yyyy', DateOd.Date) + '# ' +
+    'AND ni.datum_izdavanja <= #' + FormatDateTime('mm/dd/yyyy', DateDo.Date + 1) + '# ' +
     'ORDER BY ni.datum_izdavanja DESC';
 
-  ADOQuery1.Parameters.ParamByName('od').Value := DateOd.Date;
-  ADOQuery1.Parameters.ParamByName('do').Value := DateDo.Date + 1;
   ADOQuery1.Open;
 
   GridIzdavanja.RowCount := ADOQuery1.RecordCount;
@@ -227,25 +249,37 @@ begin
   ADOQuery1.Close;
   ADOQuery1.SQL.Text := 'SELECT SUM(kolicina) AS uk FROM nalog_nabavka';
   ADOQuery1.Open;
-  lblUkupnoNabavljeno.Text := 'Ukupno nabavljeno: ' +
-    ADOQuery1.FieldByName('uk').AsString + ' kom.';
+  if ADOQuery1.FieldByName('uk').IsNull then
+    lblUkupnoNabavljeno.Text := 'Ukupno nabavljeno: 0 kom.'
+  else
+    lblUkupnoNabavljeno.Text := 'Ukupno nabavljeno: ' +
+      ADOQuery1.FieldByName('uk').AsString + ' kom.';
 
   // Ukupno izdato
   ADOQuery1.Close;
   ADOQuery1.SQL.Text := 'SELECT SUM(kolicina) AS uk FROM nalog_izdavanje';
   ADOQuery1.Open;
-  lblUkupnoIzdato.Text := 'Ukupno izdato: ' +
-    ADOQuery1.FieldByName('uk').AsString + ' kom.';
+  if ADOQuery1.FieldByName('uk').IsNull then
+    lblUkupnoIzdato.Text := 'Ukupno izdato: 0 kom.'
+  else
+    lblUkupnoIzdato.Text := 'Ukupno izdato: ' +
+      ADOQuery1.FieldByName('uk').AsString + ' kom.';
 
-  // Vrednost zaliha
+  // Vrednost zaliha - koristi PROSECNU cenu po artiklu da se izbegne
+  // dupliranje vrednosti kada je artikal narucivan vise puta
   ADOQuery1.Close;
   ADOQuery1.SQL.Text :=
-    'SELECT SUM(z.kolicina_na_stanju * n.cena_po_komadu) AS vr ' +
+    'SELECT SUM(z.kolicina_na_stanju * p.avg_cena) AS vr ' +
     'FROM zalihe z ' +
-    'LEFT JOIN nalog_nabavka n ON n.id_artikla = z.id_artikla';
+    'LEFT JOIN (SELECT id_artikla, AVG(cena_po_komadu) AS avg_cena ' +
+    '           FROM nalog_nabavka GROUP BY id_artikla) p ' +
+    'ON p.id_artikla = z.id_artikla';
   ADOQuery1.Open;
-  lblVrednostZaliha.Text := 'Vrednost zaliha: ' +
-    FormatFloat('#,##0.00', ADOQuery1.FieldByName('vr').AsFloat) + ' RSD';
+  if ADOQuery1.FieldByName('vr').IsNull then
+    lblVrednostZaliha.Text := 'Vrednost zaliha: 0.00 RSD'
+  else
+    lblVrednostZaliha.Text := 'Vrednost zaliha: ' +
+      FormatFloat('#,##0.00', ADOQuery1.FieldByName('vr').AsFloat) + ' RSD';
 end;
 
 procedure TFormIzvestaji.btnFiltrirajClick(Sender: TObject);
@@ -261,9 +295,20 @@ begin
 end;
 
 procedure TFormIzvestaji.SpeedButton1Click(Sender: TObject);
+var
+  F: TForm;
 begin
-  Form2.Show;
-  Close;
+  F := TForm(Application.FindComponent('FormZalihe'));
+  if Assigned(F) then
+  begin
+    F.Show;
+    Hide;
+  end
+  else
+  begin
+    Form2.Show;
+    Hide;
+  end;
 end;
 
 end.
